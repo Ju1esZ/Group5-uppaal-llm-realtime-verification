@@ -1,0 +1,5 @@
+version,status,owner,source_version,model_path,query_path,result_path,requirements,reviewers,git_commit,decision_date,change_summary,open_issues
+raw,PENDING,G2,,G2/raw/,,,Prompt experiment,G1/G3/G4,,,15 original samples must remain immutable,
+v1,CANDIDATE,G5,,G5/traffic_light_v1.xml,G5/queries.q,G5/UPPAAL_验证结果.txt,FR-01--FR-06;SR-01;SR-04;RR-01,G1/G7,e7f7e89,,Baseline single-light single-vehicle model,Only three baseline queries recorded
+v2,PLANNED,G5,v1,,,,Normal integrated requirements,G3/G4/G7/G8,,,Integrate reviewed normal model,WAIT_BOUND and liveness design pending
+v3,PLANNED,G6,v2,,,,FR-07;FR-08;FRQ-01;FRQ-02,G5/G7/G8,,,Fault timeout and recovery extension,Fault strategy and timeout pending
