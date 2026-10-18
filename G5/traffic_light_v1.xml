@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// All clock values use seconds.
+clock phaseClock;
+bool crossingOccupied = false;
+
+const int RED = 0;
+const int YELLOW = 1;
+const int GREEN = 2;
+int[0,2] signal = GREEN;
+
+const int GREEN_DURATION = 20;
+const int YELLOW_DURATION = 3;
+const int RED_DURATION = 20;
+const int ARRIVAL_MIN = 1;
+const int ARRIVAL_MAX = 5;
+const int CROSSING_MIN = 2;
+const int CROSSING_MAX = 3;</declaration>
+	<template>
+		<name x="0" y="0">TrafficLight</name>
+		<declaration></declaration>
+		<location id="tl_green" x="0" y="0">
+			<name x="-8" y="-34">Green</name>
+			<label kind="invariant" x="0" y="17">phaseClock &lt;= GREEN_DURATION</label>
+		</location>
+		<location id="tl_yellow" x="220" y="0">
+			<name x="207" y="-34">Yellow</name>
+			<label kind="invariant" x="220" y="17">phaseClock &lt;= YELLOW_DURATION</label>
+		</location>
+		<location id="tl_red" x="440" y="0">
+			<name x="430" y="-34">Red</name>
+			<label kind="invariant" x="440" y="17">phaseClock &lt;= RED_DURATION</label>
+		</location>
+		<init ref="tl_green"/>
+		<transition>
+			<source ref="tl_green"/>
+			<target ref="tl_yellow"/>
+			<label kind="guard" x="75" y="-60">phaseClock &gt;= GREEN_DURATION &amp;&amp; !crossingOccupied</label>
+			<label kind="assignment" x="75" y="-43">phaseClock = 0, signal = YELLOW</label>
+		</transition>
+		<transition>
+			<source ref="tl_yellow"/>
+			<target ref="tl_red"/>
+			<label kind="guard" x="295" y="-60">phaseClock &gt;= YELLOW_DURATION</label>
+			<label kind="assignment" x="295" y="-43">phaseClock = 0, signal = RED</label>
+		</transition>
+		<transition>
+			<source ref="tl_red"/>
+			<target ref="tl_green"/>
+			<label kind="guard" x="180" y="75">phaseClock &gt;= RED_DURATION</label>
+			<label kind="assignment" x="180" y="92">phaseClock = 0, signal = GREEN</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="180">Vehicle</name>
+		<declaration>clock arrivalClock;
+clock crossingClock;</declaration>
+		<location id="v_approach" x="0" y="220">
+			<name x="-22" y="186">Approach</name>
+			<label kind="invariant" x="0" y="237">arrivalClock &lt;= ARRIVAL_MAX</label>
+		</location>
+		<location id="v_waiting" x="220" y="220">
+			<name x="203" y="186">Waiting</name>
+		</location>
+		<location id="v_crossing" x="440" y="220">
+			<name x="421" y="186">Crossing</name>
+			<label kind="invariant" x="440" y="237">crossingClock &lt;= CROSSING_MAX</label>
+		</location>
+		<location id="v_done" x="660" y="220">
+			<name x="647" y="186">Done</name>
+		</location>
+		<init ref="v_approach"/>
+		<transition>
+			<source ref="v_approach"/>
+			<target ref="v_waiting"/>
+			<label kind="guard" x="85" y="156">arrivalClock &gt;= ARRIVAL_MIN</label>
+		</transition>
+		<transition>
+			<source ref="v_waiting"/>
+			<target ref="v_crossing"/>
+			<label kind="guard" x="275" y="156">signal == GREEN &amp;&amp; phaseClock &lt;= GREEN_DURATION - CROSSING_MAX</label>
+			<label kind="assignment" x="275" y="173">crossingOccupied = true, crossingClock = 0</label>
+		</transition>
+		<transition>
+			<source ref="v_crossing"/>
+			<target ref="v_done"/>
+			<label kind="guard" x="500" y="156">crossingClock &gt;= CROSSING_MIN</label>
+			<label kind="assignment" x="500" y="173">crossingOccupied = false</label>
+		</transition>
+	</template>
+	<system>Controller = TrafficLight();
+VehicleProcess = Vehicle();
+system Controller, VehicleProcess;</system>
+	<queries>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment>G5 基础要求：模型全局无死锁。</comment>
+		</query>
+		<query>
+			<formula>A[] (VehicleProcess.Crossing imply signal == GREEN)</formula>
+			<comment>车辆只有在绿灯期间才能处于路口内。</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; VehicleProcess.Done</formula>
+			<comment>存在一条合法执行路径可完成车辆通行。</comment>
+		</query>
+	</queries>
+</nta>

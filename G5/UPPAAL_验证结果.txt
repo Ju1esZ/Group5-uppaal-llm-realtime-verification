@@ -1,0 +1,49 @@
+UPPAAL 5.0.0 Verifier 实际输出
+命令：verifyta -t 1 -y traffic_light_v1.xml queries.q
+
+Options for the verification:
+  Generating shortest trace
+  Search order is breadth first
+  Using conservative space optimisation
+  Seed is 1792316214
+  State space representation uses minimal constraint systems with future testing
+  Using HashMap + Compress integers for discrete state storage
+
+Verifying formula 1 at queries.q:2
+ -- Formula is satisfied.
+
+Verifying formula 2 at queries.q:5
+ -- Formula is satisfied.
+
+Verifying formula 3 at queries.q:8
+ -- Formula is satisfied.
+ -- Showing witness trace:
+
+State:
+( Controller.Green VehicleProcess.Approach )
+crossingOccupied=0 signal=2
+phaseClock<=5 and phaseClock-VehicleProcess.arrivalClock<=0 and phaseClock-VehicleProcess.crossingClock<=0 and VehicleProcess.arrivalClock<=5 and VehicleProcess.arrivalClock-phaseClock<=0 and VehicleProcess.arrivalClock-VehicleProcess.crossingClock<=0 and VehicleProcess.crossingClock<=5 and VehicleProcess.crossingClock-phaseClock<=0 and VehicleProcess.crossingClock-VehicleProcess.arrivalClock<=0
+
+Transition:
+  VehicleProcess.Approach->VehicleProcess.Waiting { arrivalClock >= ARRIVAL_MIN, tau, 1 }
+
+State:
+( Controller.Green VehicleProcess.Waiting )
+crossingOccupied=0 signal=2
+phaseClock>=1 and VehicleProcess.arrivalClock>=1 and VehicleProcess.crossingClock>=1 and phaseClock<=20 and phaseClock-VehicleProcess.arrivalClock<=0 and phaseClock-VehicleProcess.crossingClock<=0 and VehicleProcess.arrivalClock<=20 and VehicleProcess.arrivalClock-phaseClock<=0 and VehicleProcess.arrivalClock-VehicleProcess.crossingClock<=0 and VehicleProcess.crossingClock<=20 and VehicleProcess.crossingClock-phaseClock<=0 and VehicleProcess.crossingClock-VehicleProcess.arrivalClock<=0
+
+Transition:
+  VehicleProcess.Waiting->VehicleProcess.Crossing { signal == GREEN && phaseClock <= GREEN_DURATION - CROSSING_MAX, tau, crossingOccupied := true, crossingClock := 0 }
+
+State:
+( Controller.Green VehicleProcess.Crossing )
+crossingOccupied=1 signal=2
+phaseClock>=1 and VehicleProcess.arrivalClock>=1 and phaseClock<=20 and phaseClock-VehicleProcess.arrivalClock<=0 and phaseClock-VehicleProcess.crossingClock<=17 and VehicleProcess.arrivalClock<=20 and VehicleProcess.arrivalClock-phaseClock<=0 and VehicleProcess.arrivalClock-VehicleProcess.crossingClock<=17 and VehicleProcess.crossingClock<=3 and VehicleProcess.crossingClock-phaseClock<=-1 and VehicleProcess.crossingClock-VehicleProcess.arrivalClock<=-1
+
+Transition:
+  VehicleProcess.Crossing->VehicleProcess.Done { crossingClock >= CROSSING_MIN, tau, crossingOccupied := false }
+
+State:
+( Controller.Green VehicleProcess.Done )
+crossingOccupied=0 signal=2
+phaseClock>=3 and VehicleProcess.arrivalClock>=3 and VehicleProcess.crossingClock>=2 and phaseClock<=20 and phaseClock-VehicleProcess.arrivalClock<=0 and phaseClock-VehicleProcess.crossingClock<=17 and VehicleProcess.arrivalClock<=20 and VehicleProcess.arrivalClock-phaseClock<=0 and VehicleProcess.arrivalClock-VehicleProcess.crossingClock<=17 and VehicleProcess.crossingClock<=19 and VehicleProcess.crossingClock-phaseClock<=-1 and VehicleProcess.crossingClock-VehicleProcess.arrivalClock<=-1
