@@ -12,6 +12,11 @@
 | [`04_版本管理与评审规范.md`](04_版本管理与评审规范.md) | 定义 raw/v1/v2/v3、命名、评审门槛和变更控制 | 全组 |
 | [`05_协作计划与进度看板.md`](05_协作计划与进度看板.md) | 明确成员交付、依赖关系、会议节奏、风险和当前进度 | 全组 |
 | [`06_个人学习笔记.md`](06_个人学习笔记.md) | 汇总时间自动机、属性分类、评价指标和 Prompt 影响 | G1 |
+| [`pedestrian_request_v1.xml`](pedestrian_request_v1.xml) | G1 独立实现的行人请求式交通灯模型 | G1、G7、G8 |
+| [`pedestrian_queries.q`](pedestrian_queries.q) | 无死锁、安全、活性和时限共 8 条验证查询 | G1、G7、G8 |
+| [`G1_行人请求模型学习与验证.md`](G1_行人请求模型学习与验证.md) | 模型逻辑、GUI 验证步骤、学习任务和贡献描述 | G1 |
+| [`run_pedestrian_verification.sh`](run_pedestrian_verification.sh) | 一键运行行人模型的 verifyta 验证 | G1 |
+| [`UPPAAL_行人模型验证结果.txt`](UPPAAL_行人模型验证结果.txt) | XML/engine 编译结果与 verifier 许可证状态 | G1 |
 | [`prompts/`](prompts/) | P0 基础、P1 知识增强、P2 安全约束三套冻结 Prompt | G2 |
 | [`templates/`](templates/) | 实验运行、模型评审、版本登记、会议纪要模板 | 全组 |
 | [`tools/audit_deliverables.sh`](tools/audit_deliverables.sh) | 只读检查成员目录中的约定交付物，不修改模型 | G1 |

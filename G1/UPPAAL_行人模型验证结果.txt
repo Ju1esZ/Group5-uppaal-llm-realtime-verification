@@ -1,0 +1,59 @@
+G1 行人请求式交通灯模型验证记录
+记录日期：2026-10-18
+
+模型：G1/pedestrian_request_v1.xml
+查询：G1/pedestrian_queries.q
+工具：UPPAAL 5.0.0 (rev. 714BA9DB36F49691)
+
+一、已实际完成的检查
+
+1. XML 良构检查
+   命令：xmllint --noout G1/pedestrian_request_v1.xml
+   结果：PASS
+
+2. UPPAAL Java 模型 API 加载
+   结果：PASS
+   识别模板数：2（TrafficLight、Pedestrian）
+
+3. UPPAAL engine 模型编译
+   结果：PASS
+   识别进程数：2（Controller、PedestrianProcess）
+   编译问题：无 fatal problem
+
+4. 运行脚本语法
+   命令：bash -n G1/run_pedestrian_verification.sh
+   结果：PASS
+
+二、完整模型检测状态
+
+命令：bash G1/run_pedestrian_verification.sh
+verifyta 返回：License does not cover verifier.
+
+Java engine 对查询和 Simulator 状态探索返回：
+com.uppaal.engine.protocol.LicenseMissingException: License not found
+
+因此，当前机器上的模型已经通过 XML 加载和 UPPAAL engine 编译，但 8 条性质尚未获得
+实际 SAT/UNSAT 结果。原因是本机 UPPAAL verifier 许可证未激活或当前许可证不覆盖 verifier，
+不是模型解析/编译错误。不得把下面的预期结果写成已经验证通过。
+
+三、许可证激活后的待执行查询
+
+Q1 A[] not deadlock
+Q2 A[] (PedestrianProcess.Crossing imply signal == PED_GREEN)
+Q3 A[] (pedestrianCrossing imply Controller.PedestrianGreen)
+Q4 A[] not (PedestrianProcess.Crossing && Controller.CarGreen)
+Q5 E<> PedestrianProcess.Done
+Q6 PedestrianProcess.Waiting --> PedestrianProcess.Done
+Q7 A[] (PedestrianProcess.Waiting imply waitClock <= WAIT_BOUND)
+Q8 A[] (PedestrianProcess.Crossing imply crossingClock <= CROSSING_MAX)
+
+根据模型结构，8 条查询的设计预期均为 SAT；必须在许可证激活后重新运行 verifyta 或在 GUI
+Verifier 中执行，以实际输出替换本段预期说明。
+
+四、复现方式
+
+在 UPPAAL GUI 中激活学术许可证后，从仓库根目录运行：
+
+bash G1/run_pedestrian_verification.sh
+
+或者打开 G1/pedestrian_request_v1.xml，在 Verifier 中执行内嵌的 8 条查询。
