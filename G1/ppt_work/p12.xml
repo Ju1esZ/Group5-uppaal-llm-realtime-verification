@@ -1,0 +1,28 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="48" topLeftY="30" width="800" height="34">
+      <content fontSize="24" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>Simulator 走完一个闭环：请求到行人绿灯，再回到车辆绿灯</p></content>
+    </shape>
+    <line startX="48" startY="80" endX="912" endY="80"><border color="rgb(203,212,222)" width="1"/></line>
+    <shape type="text" topLeftX="48" topLeftY="88" width="860" height="20">
+      <content fontSize="11" color="rgb(105,120,140)"><p>逐步点“下一步”，每一步都由 Guard 与 invariant 放行 · 画面为 UPPAAL 模拟器实拍，不是重绘</p></content>
+    </shape>
+
+    <img src="CJJVb30PZoF1wUxqdp6cfHAnnqg" topLeftX="48" topLeftY="112" width="440" height="286"/>
+    <img src="ZfdYb1fMTo1ldbxIpTtcGkjbnqc" topLeftX="500" topLeftY="112" width="440" height="286"/>
+
+    <shape type="text" topLeftX="48" topLeftY="404" width="440" height="18">
+      <content fontSize="10" color="rgb(83,133,189)" bold="true"><p>图 5 · 控制器进入 PedestrianGreen、行人进入 Crossing</p></content>
+    </shape>
+    <shape type="text" topLeftX="500" topLeftY="404" width="440" height="18">
+      <content fontSize="10" color="rgb(83,133,189)" bold="true"><p>图 6 · 穿越完成回到 AllRedAfterWalk，行人 Done 复位为 Approach</p></content>
+    </shape>
+
+    <line startX="48" startY="428" endX="912" endY="428"><border color="rgb(224,229,235)" width="1"/></line>
+    <shape type="text" topLeftX="48" topLeftY="436" width="864" height="40">
+      <content fontSize="11" fontFamily="Roboto Mono" color="rgb(24,38,58)" lineSpacing="multiple:1.45"><p>(CarGreen, Approach) → Waiting → (CarYellow) → (AllRedBeforeWalk) → walkStart → (PedestrianGreen, Crossing) → walkDone → (AllRedAfterWalk, Done) → 回到 Approach → (CarGreen, Approach)</p></content>
+    </shape>
+  </data>
+  <note><content fontSize="12"><p>这条轨迹证明三件事：请求真的能被响应、两个通道方向对得上（walkStart 由控制器发、walkDone 由行人发）、以及 Done 回到 Approach 的循环边真的走得通，所以系统可以处理第二次请求。</p></content></note>
+</slide>

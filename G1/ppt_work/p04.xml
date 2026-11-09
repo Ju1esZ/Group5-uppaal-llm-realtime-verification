@@ -1,0 +1,67 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="48" topLeftY="30" width="700" height="34">
+      <content fontSize="24" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>研究问题：不是造交通灯，是量化“LLM 能不能被验证”</p></content>
+    </shape>
+    <line startX="48" startY="80" endX="912" endY="80"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="96" width="540" height="20">
+      <content fontSize="11" color="rgb(83,133,189)" bold="true" letterSpacing="1"><p>三个可度量的子问题</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="48" topLeftY="126" width="56" height="26">
+      <content fontSize="18" fontFamily="思源宋体" bold="true" color="rgb(83,133,189)"><p>RQ1</p></content>
+    </shape>
+    <shape type="text" topLeftX="104" topLeftY="124" width="486" height="26">
+      <content fontSize="15" bold="true" color="rgb(24,38,58)"><p>生成出来的模型，UPPAAL 认不认？</p></content>
+    </shape>
+    <shape type="text" topLeftX="104" topLeftY="152" width="486" height="48">
+      <content fontSize="12" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>指标是可运行率：能通过格式检查、导入编辑器并成功仿真的模型数 ÷ 生成总数。这一条直接决定后续所有验证有没有对象。</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="48" topLeftY="212" width="56" height="26">
+      <content fontSize="18" fontFamily="思源宋体" bold="true" color="rgb(83,133,189)"><p>RQ2</p></content>
+    </shape>
+    <shape type="text" topLeftX="104" topLeftY="210" width="486" height="26">
+      <content fontSize="15" bold="true" color="rgb(24,38,58)"><p>多给 LLM 一点领域知识，错误会不会变少？</p></content>
+    </shape>
+    <shape type="text" topLeftX="104" topLeftY="238" width="486" height="48">
+      <content fontSize="12" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>用 P0 基础、P1 时间自动机知识、P2 安全与时限约束三组 Prompt 做对照，比语法错误率与语义错误率，而不是比“看起来像不像”。</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="48" topLeftY="298" width="56" height="26">
+      <content fontSize="18" fontFamily="思源宋体" bold="true" color="rgb(83,133,189)"><p>RQ3</p></content>
+    </shape>
+    <shape type="text" topLeftX="104" topLeftY="296" width="486" height="26">
+      <content fontSize="15" bold="true" color="rgb(24,38,58)"><p>从“能跑”到“能证明”，人要付多少代价？</p></content>
+    </shape>
+    <shape type="text" topLeftX="104" topLeftY="324" width="486" height="72">
+      <content fontSize="12" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>按修改文件数、代码行数、修复错误数、耗时记录人工修复成本；若需要重画模板或重写查询，单独记为结构性返工。AI 生成不算完成，工具检查过才算。</p></content>
+    </shape>
+
+    <line startX="48" startY="422" endX="912" endY="422"><border color="rgb(224,229,235)" width="1"/></line>
+    <shape type="text" topLeftX="48" topLeftY="436" width="820" height="24">
+      <content fontSize="11" color="rgb(24,38,58)"><p>因此项目选了一个“小到能验完、大到有五条以上性质”的对象：单方向单车道的行人请求式交通灯。</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="600" topLeftY="96" width="312" height="20">
+      <content fontSize="11" color="rgb(81,157,120)" bold="true" letterSpacing="1"><p>已纳入 v1 的边界</p></content>
+    </shape>
+    <shape type="text" topLeftX="600" topLeftY="122" width="312" height="120">
+      <content fontSize="12" color="rgb(24,38,58)" lineSpacing="multiple:1.6"><p>车辆红 / 黄 / 绿三态切换<br/>行人请求与等待过街<br/>行人绿灯通行与穿越完成<br/>行人最长等待时间上界<br/>无死锁验证<br/>信号灯故障、超时与恢复（v3）</p></content>
+    </shape>
+    <line startX="600" startY="252" endX="912" endY="252"><border color="rgb(224,229,235)" width="1"/></line>
+    <shape type="text" topLeftX="600" topLeftY="264" width="312" height="20">
+      <content fontSize="11" color="rgb(105,120,140)" bold="true" letterSpacing="1"><p>明确暂不纳入</p></content>
+    </shape>
+    <shape type="text" topLeftX="600" topLeftY="290" width="312" height="100">
+      <content fontSize="12" color="rgb(105,120,140)" lineSpacing="multiple:1.6"><p>多车道、多方向路口<br/>真实交通流量与排队模型<br/>车辆加速度与物理约束<br/>跨路口协同与信号配时优化</p></content>
+    </shape>
+    <line startX="600" startY="392" endX="912" endY="392"><border color="rgb(224,229,235)" width="1"/></line>
+    <shape type="text" topLeftX="600" topLeftY="396" width="312" height="20">
+      <content fontSize="10" color="rgb(105,120,140)"><p>边界一放开，状态空间指数膨胀，验证就跑不完</p></content>
+    </shape>
+  </data>
+  <note><content fontSize="12"><p>这页解决“我们在干什么”的迷茫：三个子问题分别对应可运行率、错误率、修复成本，全部可量化。右边的边界表说明为什么对象这么小——为了让验证真的能跑完。</p></content></note>
+</slide>

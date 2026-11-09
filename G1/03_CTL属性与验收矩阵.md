@@ -42,7 +42,7 @@
 | Q-R02 | FR-01 | 可达 | `E<> Controller.Red`、`E<> Controller.Yellow` | v1-v3 | 每个灯相位应可达 |
 | Q-L01 | LR-01 | 活性 | `VehicleProcess.Waiting --> VehicleProcess.Done` | v2 | 目标性质；失败时保存反例并讨论无限拖延 |
 | Q-L02 | FR-01 | 活性 | `Controller.Red --> Controller.Green` | v1-v2 | 正常场景应通过 |
-| Q-T01 | TR-02 | 时限 | `A[] (VehicleProcess.Crossing imply crossingClock <= CROSSING_MAX)` | v1-v3 | 应由位置不变量保证 |
+| Q-T01 | TR-02 | 时限 | `A[] (VehicleProcess.Crossing imply VehicleProcess.crossingClock <= CROSSING_MAX)` | v1-v3 | 应由位置不变量保证 |
 | Q-T02 | TR-01 | 时限 | 观察者超时位置；`A[] not WaitObserver.Timeout` | v2-v3 | `WAIT_BOUND` 冻结后执行 |
 | Q-F01 | FRQ-01 | 故障可达 | `E<> FaultMonitor.Timeout` 或等价位置 | v3 | 必须存在故障见证 |
 | Q-F02 | FRQ-02 | 恢复可达 | `E<> (FaultMonitor.Timeout && ...)` 后的观察者恢复位置 | v3 | 仅可恢复策略适用 |

@@ -1,0 +1,70 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="48" topLeftY="30" width="760" height="34">
+      <content fontSize="24" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>口径与门禁：五个指标，六道关</p></content>
+    </shape>
+    <line startX="48" startY="80" endX="912" endY="80"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="92" width="440" height="20">
+      <content fontSize="11" color="rgb(83,133,189)" bold="true" letterSpacing="1"><p>所有人共用的五个统计指标</p></content>
+    </shape>
+    <table topLeftX="48" topLeftY="118" width="556" height="300">
+      <colgroup><col width="118"/><col width="240"/><col width="198"/></colgroup>
+      <tr height="28">
+        <td><fill><fillColor color="rgb(30,60,120)"/></fill><content fontSize="11" bold="true" color="rgb(255,255,255)" textAlign="left"><p>指标</p></content></td>
+        <td><fill><fillColor color="rgb(30,60,120)"/></fill><content fontSize="11" bold="true" color="rgb(255,255,255)" textAlign="left"><p>计算方式</p></content></td>
+        <td><fill><fillColor color="rgb(30,60,120)"/></fill><content fontSize="11" bold="true" color="rgb(255,255,255)" textAlign="left"><p>它回答什么</p></content></td>
+      </tr>
+      <tr height="56">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="left"><p>模型可运行率</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>成功导入并可仿真的模型 ÷ 生成总数</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>LLM 输出能不能直接进工具</p></content></td>
+      </tr>
+      <tr height="64">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="left"><p>语法错误率</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>含 XML、模板、位置、迁移、通道声明错误的样本 ÷ 总数</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>低级错误集中在哪一层</p></content></td>
+      </tr>
+      <tr height="64">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="left"><p>语义错误率</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>冲突灯色、请求无响应、时钟未重置等样本 ÷ 总数</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>“能跑但错”的那一类</p></content></td>
+      </tr>
+      <tr height="56">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="left"><p>属性通过率</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>满足的查询条数 ÷ 实际执行的查询条数</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>模型到底证明了什么</p></content></td>
+      </tr>
+      <tr height="56">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="left"><p>修复成本</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>修改文件数、代码行数、错误数、耗时，重画模板单列</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>省下的与付出的人力</p></content></td>
+      </tr>
+    </table>
+
+    <shape type="text" topLeftX="620" topLeftY="92" width="292" height="20">
+      <content fontSize="11" color="rgb(81,157,120)" bold="true" letterSpacing="1"><p>版本链与评审门禁</p></content>
+    </shape>
+    <line startX="620" startY="118" endX="912" endY="118"><border color="rgb(224,229,235)" width="1"/></line>
+    <shape type="text" topLeftX="620" topLeftY="126" width="292" height="22"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>raw　LLM 原始输出</p></content></shape>
+    <shape type="text" topLeftX="620" topLeftY="146" width="292" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>Gate A：只做登记，不做修改</p></content></shape>
+    <shape type="text" topLeftX="620" topLeftY="176" width="292" height="22"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>repair　人工语法修复</p></content></shape>
+    <shape type="text" topLeftX="620" topLeftY="196" width="292" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>Gate B：能导入、能检查语法</p></content></shape>
+    <shape type="text" topLeftX="620" topLeftY="226" width="292" height="22"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>v1　基础正常模型</p></content></shape>
+    <shape type="text" topLeftX="620" topLeftY="246" width="292" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>Gate C：无死锁 + 安全性质通过</p></content></shape>
+    <shape type="text" topLeftX="620" topLeftY="276" width="292" height="22"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>v2　整合与行人请求扩展</p></content></shape>
+    <shape type="text" topLeftX="620" topLeftY="296" width="292" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>Gate D：活性与时限性质通过</p></content></shape>
+    <shape type="text" topLeftX="620" topLeftY="326" width="292" height="22"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>v3　故障与超时恢复</p></content></shape>
+    <shape type="text" topLeftX="620" topLeftY="346" width="292" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>Gate E / F：故障场景可恢复、结论可复现</p></content></shape>
+    <line startX="620" startY="378" endX="912" endY="378"><border color="rgb(224,229,235)" width="1"/></line>
+    <shape type="text" topLeftX="620" topLeftY="390" width="292" height="76">
+      <content fontSize="11" color="rgb(24,38,58)" lineSpacing="multiple:1.45"><p>个人技术线对齐 Gate C：本页之后讲的行人模型，就是一条走到 Gate C 并额外验证活性与时限的实例。</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="48" topLeftY="432" width="556" height="40">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.4"><p>口径统一的关键：所有统计只认“实际执行过的查询结果”，人工修复前后的两次结果分开记，不做合并美化。</p></content>
+    </shape>
+  </data>
+  <note><content fontSize="12"><p>这页讲“怎么算”。五个指标里前三个衡量 LLM，后两个衡量配合 LLM 的人。右边的版本链说明门禁顺序：没过 Gate 就不许进下一版，避免把坏模型带到统计里。</p></content></note>
+</slide>
