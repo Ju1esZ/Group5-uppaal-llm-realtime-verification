@@ -26,111 +26,125 @@ const int ARRIVAL_MAX = 4;
 const int CROSSING_MIN = 3;
 const int CROSSING_MAX = 4;
 
-// Worst case: request at t=1, vehicle green ends at t=10,
-// then 2 seconds yellow and 1 second all-red clearance.
-const int WAIT_BOUND = 12;</declaration>
+// Worst case for a cyclic run: the request may arrive right after the green
+// phase restarts, so the pedestrian can wait the whole green period
+// (CAR_GREEN_MAX = 10), then YELLOW_DURATION = 2 and ALL_RED_DURATION = 1.
+// 10 + 2 + 1 = 13, hence WAIT_BOUND = 13.
+// Note: 12 was the optimistic value that only holds for the first request,
+// which cannot arrive before t = 1; the cyclic model invalidates it and
+// UPPAAL returns a counterexample for WAIT_BOUND = 12.
+const int WAIT_BOUND = 13;</declaration>
 	<template>
 		<name x="0" y="0">TrafficLight</name>
 		<location id="c_car_green" x="0" y="0">
-			<name x="-35" y="-34">CarGreen</name>
-			<label kind="invariant" x="-85" y="17">phaseClock &lt;= CAR_GREEN_MAX</label>
+			<name x="-38" y="-45">CarGreen</name>
+			<label kind="invariant" x="-72" y="32">phaseClock &lt;= CAR_GREEN_MAX</label>
 		</location>
-		<location id="c_car_yellow" x="250" y="0">
-			<name x="211" y="-34">CarYellow</name>
-			<label kind="invariant" x="190" y="17">phaseClock &lt;= YELLOW_DURATION</label>
+		<location id="c_car_yellow" x="300" y="0">
+			<name x="262" y="-45">CarYellow</name>
+			<label kind="invariant" x="245" y="32">phaseClock &lt;= YELLOW_DURATION</label>
 		</location>
-		<location id="c_all_red_before" x="500" y="0">
-			<name x="445" y="-34">AllRedBeforeWalk</name>
-			<label kind="invariant" x="440" y="17">phaseClock &lt;= ALL_RED_DURATION</label>
+		<location id="c_all_red_before" x="620" y="0">
+			<name x="562" y="-45">AllRedBeforeWalk</name>
+			<label kind="invariant" x="565" y="32">phaseClock &lt;= ALL_RED_DURATION</label>
 		</location>
-		<location id="c_ped_green" x="750" y="0">
-			<name x="705" y="-34">PedestrianGreen</name>
-			<label kind="invariant" x="690" y="17">phaseClock &lt;= CROSSING_MAX</label>
+		<location id="c_ped_green" x="940" y="0">
+			<name x="898" y="-45">PedestrianGreen</name>
+			<label kind="invariant" x="885" y="32">phaseClock &lt;= CROSSING_MAX</label>
 		</location>
-		<location id="c_all_red_after" x="500" y="180">
-			<name x="445" y="197">AllRedAfterWalk</name>
-			<label kind="invariant" x="440" y="214">phaseClock &lt;= ALL_RED_DURATION</label>
+		<location id="c_all_red_after" x="620" y="210">
+			<name x="562" y="245">AllRedAfterWalk</name>
+			<label kind="invariant" x="545" y="278">phaseClock &lt;= ALL_RED_DURATION</label>
 		</location>
 		<init ref="c_car_green"/>
 		<transition>
 			<source ref="c_car_green"/>
 			<target ref="c_car_yellow"/>
-			<label kind="guard" x="45" y="-75">requestPending &amp;&amp; phaseClock &gt;= CAR_GREEN_MIN</label>
-			<label kind="assignment" x="55" y="-58">phaseClock = 0, signal = CAR_YELLOW</label>
+			<label kind="guard" x="60" y="-110">requestPending &amp;&amp; phaseClock &gt;= CAR_GREEN_MIN</label>
+			<label kind="assignment" x="60" y="-73">phaseClock = 0, signal = CAR_YELLOW</label>
 		</transition>
 		<transition>
 			<source ref="c_car_green"/>
 			<target ref="c_car_green"/>
-			<label kind="guard" x="-220" y="70">!requestPending &amp;&amp; phaseClock &gt;= CAR_GREEN_MAX</label>
-			<label kind="assignment" x="-220" y="87">phaseClock = 0</label>
-			<nail x="-110" y="120"/>
-			<nail x="110" y="120"/>
+			<label kind="guard" x="145" y="95">!requestPending &amp;&amp; phaseClock &gt;= CAR_GREEN_MAX</label>
+			<label kind="assignment" x="145" y="132">phaseClock = 0</label>
+			<nail x="-60" y="80"/>
+			<nail x="60" y="80"/>
 		</transition>
 		<transition>
 			<source ref="c_car_yellow"/>
 			<target ref="c_all_red_before"/>
-			<label kind="guard" x="300" y="-75">phaseClock &gt;= YELLOW_DURATION</label>
-			<label kind="assignment" x="300" y="-58">phaseClock = 0, signal = ALL_RED</label>
+			<label kind="guard" x="350" y="-170">phaseClock &gt;= YELLOW_DURATION</label>
+			<label kind="assignment" x="350" y="-133">phaseClock = 0, signal = ALL_RED</label>
 		</transition>
 		<transition>
 			<source ref="c_all_red_before"/>
 			<target ref="c_ped_green"/>
-			<label kind="guard" x="550" y="-92">phaseClock &gt;= ALL_RED_DURATION</label>
-			<label kind="synchronisation" x="585" y="-75">walkStart!</label>
-			<label kind="assignment" x="550" y="-58">phaseClock = 0, signal = PED_GREEN</label>
+			<label kind="guard" x="640" y="-230">phaseClock &gt;= ALL_RED_DURATION</label>
+			<label kind="synchronisation" x="640" y="-193">walkStart!</label>
+			<label kind="assignment" x="640" y="-156">phaseClock = 0, signal = PED_GREEN</label>
 		</transition>
 		<transition>
 			<source ref="c_ped_green"/>
 			<target ref="c_all_red_after"/>
-			<label kind="synchronisation" x="650" y="95">walkDone?</label>
-			<label kind="assignment" x="555" y="112">phaseClock = 0, signal = ALL_RED, requestPending = false</label>
+			<label kind="synchronisation" x="560" y="80">walkDone?</label>
+			<label kind="assignment" x="560" y="117">phaseClock = 0, signal = ALL_RED, requestPending = false</label>
+			<nail x="820" y="210"/>
+			<nail x="780" y="210"/>
 		</transition>
 		<transition>
 			<source ref="c_all_red_after"/>
 			<target ref="c_car_green"/>
-			<label kind="guard" x="145" y="245">phaseClock &gt;= ALL_RED_DURATION</label>
-			<label kind="assignment" x="145" y="262">phaseClock = 0, signal = CAR_GREEN</label>
-			<nail x="250" y="180"/>
-			<nail x="0" y="180"/>
+			<label kind="guard" x="165" y="245">phaseClock &gt;= ALL_RED_DURATION</label>
+			<label kind="assignment" x="165" y="282">phaseClock = 0, signal = CAR_GREEN</label>
+			<nail x="330" y="210"/>
+			<nail x="0" y="210"/>
 		</transition>
 	</template>
 	<template>
-		<name x="0" y="340">Pedestrian</name>
+		<name x="0" y="700">Pedestrian</name>
 		<declaration>clock arrivalClock;
 clock crossingClock;</declaration>
-		<location id="p_approach" x="0" y="400">
-			<name x="-28" y="366">Approach</name>
-			<label kind="invariant" x="-55" y="417">arrivalClock &lt;= ARRIVAL_MAX</label>
+		<location id="p_approach" x="0" y="800">
+			<name x="-38" y="755">Approach</name>
+			<label kind="invariant" x="-72" y="832">arrivalClock &lt;= ARRIVAL_MAX</label>
 		</location>
-		<location id="p_waiting" x="250" y="400">
-			<name x="228" y="366">Waiting</name>
+		<location id="p_waiting" x="300" y="800">
+			<name x="272" y="755">Waiting</name>
 		</location>
-		<location id="p_crossing" x="500" y="400">
-			<name x="474" y="366">Crossing</name>
-			<label kind="invariant" x="445" y="417">crossingClock &lt;= CROSSING_MAX</label>
+		<location id="p_crossing" x="600" y="800">
+			<name x="566" y="755">Crossing</name>
+			<label kind="invariant" x="545" y="832">crossingClock &lt;= CROSSING_MAX</label>
 		</location>
-		<location id="p_done" x="750" y="400">
-			<name x="733" y="366">Done</name>
+		<location id="p_done" x="900" y="800">
+			<name x="878" y="755">Done</name>
 		</location>
 		<init ref="p_approach"/>
 		<transition>
 			<source ref="p_approach"/>
 			<target ref="p_waiting"/>
-			<label kind="guard" x="60" y="325">arrivalClock &gt;= ARRIVAL_MIN</label>
-			<label kind="assignment" x="55" y="342">requestPending = true, waitClock = 0</label>
+			<label kind="guard" x="30" y="650">arrivalClock &gt;= ARRIVAL_MIN</label>
+			<label kind="assignment" x="30" y="687">requestPending = true, waitClock = 0</label>
 		</transition>
 		<transition>
 			<source ref="p_waiting"/>
 			<target ref="p_crossing"/>
-			<label kind="synchronisation" x="335" y="325">walkStart?</label>
-			<label kind="assignment" x="300" y="342">crossingClock = 0, pedestrianCrossing = true</label>
+			<label kind="synchronisation" x="330" y="555">walkStart?</label>
+			<label kind="assignment" x="330" y="592">crossingClock = 0, pedestrianCrossing = true</label>
 		</transition>
 		<transition>
 			<source ref="p_crossing"/>
 			<target ref="p_done"/>
-			<label kind="guard" x="560" y="308">crossingClock &gt;= CROSSING_MIN</label>
-			<label kind="synchronisation" x="605" y="325">walkDone!</label>
-			<label kind="assignment" x="570" y="342">pedestrianCrossing = false</label>
+			<label kind="guard" x="630" y="465">crossingClock &gt;= CROSSING_MIN</label>
+			<label kind="synchronisation" x="630" y="502">walkDone!</label>
+			<label kind="assignment" x="630" y="539">pedestrianCrossing = false</label>
+		</transition>
+		<transition>
+			<source ref="p_done"/>
+			<target ref="p_approach"/>
+			<label kind="assignment" x="380" y="905">arrivalClock = 0</label>
+			<nail x="900" y="890"/>
+			<nail x="0" y="890"/>
 		</transition>
 	</template>
 	<system>Controller = TrafficLight();
@@ -163,10 +177,10 @@ system Controller, PedestrianProcess;</system>
 		</query>
 		<query>
 			<formula>A[] (PedestrianProcess.Waiting imply waitClock &lt;= WAIT_BOUND)</formula>
-			<comment>行人等待时间不超过推导出的 12 秒上界。</comment>
+			<comment>行人等待时间不超过推导出的 13 秒上界。</comment>
 		</query>
 		<query>
-			<formula>A[] (PedestrianProcess.Crossing imply crossingClock &lt;= CROSSING_MAX)</formula>
+			<formula>A[] (PedestrianProcess.Crossing imply PedestrianProcess.crossingClock &lt;= CROSSING_MAX)</formula>
 			<comment>穿越时间不超过 4 秒。</comment>
 		</query>
 	</queries>

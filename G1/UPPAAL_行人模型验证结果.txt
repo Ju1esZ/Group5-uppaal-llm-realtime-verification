@@ -1,59 +1,124 @@
 G1 行人请求式交通灯模型验证记录
-记录日期：2026-10-18
+记录日期：2026-10-21（命令行验证）
+更新日期：2026-11-09（GUI 8/8 同屏 + 模拟器轨迹补齐）
 
 模型：G1/pedestrian_request_v1.xml
 查询：G1/pedestrian_queries.q
 工具：UPPAAL 5.0.0 (rev. 714BA9DB36F49691)
-
-一、已实际完成的检查
-
-1. XML 良构检查
-   命令：xmllint --noout G1/pedestrian_request_v1.xml
-   结果：PASS
-
-2. UPPAAL Java 模型 API 加载
-   结果：PASS
-   识别模板数：2（TrafficLight、Pedestrian）
-
-3. UPPAAL engine 模型编译
-   结果：PASS
-   识别进程数：2（Controller、PedestrianProcess）
-   编译问题：无 fatal problem
-
-4. 运行脚本语法
-   命令：bash -n G1/run_pedestrian_verification.sh
-   结果：PASS
-
-二、完整模型检测状态
-
 命令：bash G1/run_pedestrian_verification.sh
-verifyta 返回：License does not cover verifier.
 
-Java engine 对查询和 Simulator 状态探索返回：
-com.uppaal.engine.protocol.LicenseMissingException: License not found
+一、基础检查
 
-因此，当前机器上的模型已经通过 XML 加载和 UPPAAL engine 编译，但 8 条性质尚未获得
-实际 SAT/UNSAT 结果。原因是本机 UPPAAL verifier 许可证未激活或当前许可证不覆盖 verifier，
-不是模型解析/编译错误。不得把下面的预期结果写成已经验证通过。
+| 检查项 | 结果 | 证据 |
+| --- | --- | --- |
+| XML 良构 | PASS | `xmllint --noout G1/pedestrian_request_v1.xml` |
+| UPPAAL 模板加载 | PASS | 识别 2 个模板：`TrafficLight`、`Pedestrian` |
+| UPPAAL engine 编译 | PASS | 识别 2 个进程：`Controller`、`PedestrianProcess` |
+| verifyta 脚本 | PASS | 自动找到本机 UPPAAL 5.0.0 `verifyta` |
 
-三、许可证激活后的待执行查询
+二、8 条查询结果
 
-Q1 A[] not deadlock
-Q2 A[] (PedestrianProcess.Crossing imply signal == PED_GREEN)
-Q3 A[] (pedestrianCrossing imply Controller.PedestrianGreen)
-Q4 A[] not (PedestrianProcess.Crossing && Controller.CarGreen)
-Q5 E<> PedestrianProcess.Done
-Q6 PedestrianProcess.Waiting --> PedestrianProcess.Done
-Q7 A[] (PedestrianProcess.Waiting imply waitClock <= WAIT_BOUND)
-Q8 A[] (PedestrianProcess.Crossing imply crossingClock <= CROSSING_MAX)
+| 编号 | 查询 | UPPAAL 结果 |
+| --- | --- | --- |
+| Q1 | `A[] not deadlock` | Formula is satisfied. |
+| Q2 | `A[] (PedestrianProcess.Crossing imply signal == PED_GREEN)` | Formula is satisfied. |
+| Q3 | `A[] (pedestrianCrossing imply Controller.PedestrianGreen)` | Formula is satisfied. |
+| Q4 | `A[] not (PedestrianProcess.Crossing && Controller.CarGreen)` | Formula is satisfied. |
+| Q5 | `E<> PedestrianProcess.Done` | Formula is satisfied. |
+| Q6 | `PedestrianProcess.Waiting --> PedestrianProcess.Done` | Formula is satisfied. |
+| Q7 | `A[] (PedestrianProcess.Waiting imply waitClock <= WAIT_BOUND)` | Formula is satisfied. |
+| Q8 | `A[] (PedestrianProcess.Crossing imply PedestrianProcess.crossingClock <= CROSSING_MAX)` | Formula is satisfied. |
 
-根据模型结构，8 条查询的设计预期均为 SAT；必须在许可证激活后重新运行 verifyta 或在 GUI
-Verifier 中执行，以实际输出替换本段预期说明。
+结论：8/8 条查询验证通过。
 
-四、复现方式
+三、Q5 witness trace 摘要
 
-在 UPPAAL GUI 中激活学术许可证后，从仓库根目录运行：
+UPPAAL 生成的最短见证轨迹包含：
 
-bash G1/run_pedestrian_verification.sh
+```text
+Controller.CarGreen + PedestrianProcess.Approach
+  -> PedestrianProcess.Waiting
+  -> Controller.CarYellow
+  -> Controller.AllRedBeforeWalk
+  -> Controller.PedestrianGreen + PedestrianProcess.Crossing
+  -> Controller.AllRedAfterWalk + PedestrianProcess.Done
+```
 
-或者打开 G1/pedestrian_request_v1.xml，在 Verifier 中执行内嵌的 8 条查询。
+其中 `walkStart! / walkStart?` 同步控制器进入行人绿灯和行人进入穿越状态，
+`walkDone! / walkDone?` 同步行人完成通行和控制器离开行人绿灯。
+
+四、修复记录
+
+第一次运行时 Q8 报错：
+
+```text
+Unknown identifier: crossingClock
+```
+
+原因是 `crossingClock` 在 `Pedestrian` 模板内部声明，不能在全局查询中直接使用。修复为：
+
+```text
+PedestrianProcess.crossingClock
+```
+
+修复后重新运行，8 条查询全部通过。
+
+
+五、等待上界从 12 秒修正为 13 秒（2026-11-07）
+
+给 Pedestrian 模板补上 `Done --> Approach` 的循环边（只复位 arrivalClock）后，行人可以反复过街，
+于是请求可以落在车辆绿灯周期的起点（phaseClock ≈ 0），最坏等待变为：
+
+```text
+CAR_GREEN_MAX(10) + YELLOW_DURATION(2) + ALL_RED_DURATION(1) = 13 秒
+```
+
+把 WAIT_BOUND 设成 12 再验证，UPPAAL 直接返回反例（Controller.CarYellow +
+PedestrianProcess.Waiting，waitClock 涨到 13），因此模型 declaration 中改为
+`const int WAIT_BOUND = 13;`，并保留注释说明 12 是被反例推翻的乐观值。
+修改后再次运行 verifyta，8 条查询仍然全部 satisfied。
+
+六、UPPAAL 5.0.0 GUI 实际操作记录（2026-11-07 首次，2026-11-09 补齐 8/8 与仿真）
+
+1. 启动 /Applications/UPPAAL-5.0.0.app，File -> Open System 打开 pedestrian_request_v1.xml；
+2. Editor 中依次查看 TrafficLight 与 Pedestrian 两个模板（状态、卫士、不变量、同步标签）；
+3. 切到 Verifier，XML 内嵌的 8 条查询自动载入性质列表；
+4. 逐条选中查询并点击“开始验证”。一次只跑当前选中的一条，已跑过的行会保留绿点，
+   中途不能点“Clear results”，否则绿点会被清空；
+5. 结果区输出“验证费时/kernel费时/总费时”“常驻内存/虚拟内存的使用峰值”和“满足该性质。”。
+
+2026-11-09 本轮补齐的两件事：
+
+(1) 8 条查询在同一屏全部为绿点。逐条跑完后截图 05：
+    性质列表 8 行，右侧状态圆点全部为绿色；选中行（Q3
+    `A[] (pedestrianCrossing imply Controller.PedestrianGreen)`）的结果区显示
+    “验证费时/kernel费时/总费时: 0.001s / 0.002s / 0.003s，常驻内存/虚拟内存的使用峰值:
+    32,328KB / 35,311,872KB”，“满足该性质。”。Q3 是最后补上的一颗绿点
+    （此前多轮截图停在该行为灰点，原因是点击行位置偏移，选中的是相邻行）。
+
+(2) 模拟器（Simulator）实际仿真，走完一个完整的“请求—通行—回位”周期，截图 06、07。
+    Trace 依次为：
+    (CarGreen, Approach) → PedestrianProcess → (CarGreen, Waiting) →
+    Controller → (CarYellow, Waiting) → Controller → (AllRedBeforeWalk, Waiting) →
+    walkStart: Controller → PedestrianProcess → (PedestrianGreen, Crossing) →
+    walkDone: PedestrianProcess → Controller → (AllRedAfterWalk, Done) →
+    PedestrianProcess → (AllRedAfterWalk, Approach) → Controller → (CarGreen, Approach)。
+    这条轨迹同时验证了两件事：行人请求确实能把车辆绿灯打断、走完黄灯与全红，
+    并在行人穿越结束后回到车辆绿灯；以及 Done -> Approach 的循环边真实可走
+    （否则轨迹会在 Done 处终止）。
+
+界面截图（G1/screenshots/，文件名与索引一致）：
+
+| 文件 | 内容 |
+| --- | --- |
+| 00_验证器列表.png | 验证器载入 8 条内嵌查询，圆点均为未验证 |
+| 01_TrafficLight.png | TrafficLight 五位置，含 CarGreen 自环与 walkStart! / walkDone? |
+| 02_Pedestrain.png | Pedestrian 四位置；walkDone! 在 Crossing→Done，循环边只复位 arrivalClock |
+| 03_验证器.png | 中间过程：Q1、Q2、Q4–Q8 为绿；结果区为 Q7，显示“满足该性质。” |
+| 04_验证结果_Q8穿越时限_满足.png | Q8 结果条：公式、0.003s、内存峰值、“满足该性质。” |
+| 05_验证器_8条全部满足_绿点同屏.png | 8 条查询圆点全绿同屏；结果区为最后补跑的 Q3，“满足该性质。” |
+| 06_模拟器_轨迹_请求到行人绿灯.png | 仿真轨迹前半段：Approach→Waiting→CarYellow→AllRedBeforeWalk→walkStart→PedestrianGreen+Crossing |
+| 07_模拟器_轨迹_穿越完成回到车辆绿灯.png | 仿真轨迹后半段：walkDone→AllRedAfterWalk+Done→Done 回 Approach→CarGreen，闭环 |
+
+结论：GUI 与命令行两条路径都实际跑出了 8/8 满足；命令行（verifyta）一次性输出仍是
+最紧凑的完整记录，见 `bash G1/run_pedestrian_verification.sh`。

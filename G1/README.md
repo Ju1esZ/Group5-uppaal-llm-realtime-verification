@@ -16,7 +16,8 @@
 | [`pedestrian_queries.q`](pedestrian_queries.q) | 无死锁、安全、活性和时限共 8 条验证查询 | G1、G7、G8 |
 | [`G1_行人请求模型学习与验证.md`](G1_行人请求模型学习与验证.md) | 模型逻辑、GUI 验证步骤、学习任务和贡献描述 | G1 |
 | [`run_pedestrian_verification.sh`](run_pedestrian_verification.sh) | 一键运行行人模型的 verifyta 验证 | G1 |
-| [`UPPAAL_行人模型验证结果.txt`](UPPAAL_行人模型验证结果.txt) | XML/engine 编译结果与 verifier 许可证状态 | G1 |
+| [`UPPAAL_行人模型验证结果.txt`](UPPAAL_行人模型验证结果.txt) | verifyta 8/8 结果、Q5 见证、等待上界修正和 GUI 操作记录 | G1 |
+| [`screenshots/`](screenshots/索引.md) | 验证器列表、两个模板、7 条绿点与 Q8 结果条；说明见索引 | G1 |
 | [`prompts/`](prompts/) | P0 基础、P1 知识增强、P2 安全约束三套冻结 Prompt | G2 |
 | [`templates/`](templates/) | 实验运行、模型评审、版本登记、会议纪要模板 | 全组 |
 | [`tools/audit_deliverables.sh`](tools/audit_deliverables.sh) | 只读检查成员目录中的约定交付物，不修改模型 | G1 |

@@ -16,8 +16,8 @@ E<> PedestrianProcess.Done
 // Q6: 每次等待最终都会完成通行（活性）
 PedestrianProcess.Waiting --> PedestrianProcess.Done
 
-// Q7: 行人等待不超过 12 秒
+// Q7: 行人等待不超过 13 秒（WAIT_BOUND 由 12 修正为 13：循环场景下请求可落在绿灯周期起点）
 A[] (PedestrianProcess.Waiting imply waitClock <= WAIT_BOUND)
 
 // Q8: 行人穿越不超过 4 秒
-A[] (PedestrianProcess.Crossing imply crossingClock <= CROSSING_MAX)
+A[] (PedestrianProcess.Crossing imply PedestrianProcess.crossingClock <= CROSSING_MAX)
