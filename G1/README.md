@@ -17,7 +17,9 @@
 | [`G1_行人请求模型学习与验证.md`](G1_行人请求模型学习与验证.md) | 模型逻辑、GUI 验证步骤、学习任务和贡献描述 | G1 |
 | [`run_pedestrian_verification.sh`](run_pedestrian_verification.sh) | 一键运行行人模型的 verifyta 验证 | G1 |
 | [`UPPAAL_行人模型验证结果.txt`](UPPAAL_行人模型验证结果.txt) | verifyta 8/8 结果、Q5 见证、等待上界修正和 GUI 操作记录 | G1 |
-| [`screenshots/`](screenshots/索引.md) | 验证器列表、两个模板、7 条绿点与 Q8 结果条；说明见索引 | G1 |
+| [`screenshots/`](screenshots/索引.md) | 模板、8 条查询同屏为绿、模拟器完整轨迹 | G1 |
+| [`项目报告.md`](项目报告.md) | G1 已完成工作的报告汇总，供并入全组项目报告 | G1 |
+| [`AI使用记录.md`](AI使用记录.md) | 对 G1 交付有实质影响的 AI 使用，只记本人要求和采纳方式 | G1 |
 | [`prompts/`](prompts/) | P0 基础、P1 知识增强、P2 安全约束三套冻结 Prompt | G2 |
 | [`templates/`](templates/) | 实验运行、模型评审、版本登记、会议纪要模板 | 全组 |
 | [`tools/audit_deliverables.sh`](tools/audit_deliverables.sh) | 只读检查成员目录中的约定交付物，不修改模型 | G1 |

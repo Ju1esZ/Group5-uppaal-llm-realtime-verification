@@ -1,0 +1,58 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="72" topLeftY="46" width="420" height="30">
+      <content fontSize="13" color="rgb(83,133,189)" bold="true" letterSpacing="2"><p>CONTENTS · 汇报目录</p></content>
+    </shape>
+    <line startX="72" startY="84" endX="888" endY="84"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <shape type="text" topLeftX="72" topLeftY="104" width="70" height="46">
+      <content fontSize="34" fontFamily="思源宋体" color="rgb(83,133,189)"><p>01</p></content>
+    </shape>
+    <shape type="text" topLeftX="156" topLeftY="110" width="700" height="28">
+      <content fontSize="22" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>项目与方法：我们要回答什么</p></content>
+    </shape>
+    <shape type="text" topLeftX="156" topLeftY="144" width="700" height="22">
+      <content fontSize="12" color="rgb(105,120,140)"><p>研究问题与模型边界 · P0/P1/P2 三组 Prompt 对照 · 评价指标与版本门禁</p></content>
+    </shape>
+    <line startX="72" startY="184" endX="888" endY="184"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="72" topLeftY="196" width="70" height="46">
+      <content fontSize="34" fontFamily="思源宋体" color="rgb(83,133,189)"><p>02</p></content>
+    </shape>
+    <shape type="text" topLeftX="156" topLeftY="202" width="700" height="28">
+      <content fontSize="22" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>我的技术线：行人请求式交通灯模型</p></content>
+    </shape>
+    <shape type="text" topLeftX="156" topLeftY="236" width="700" height="22">
+      <content fontSize="12" color="rgb(105,120,140)"><p>两个模板与两条通道 · 一个请求周期的时间预算 · 等待上界为什么是 13 秒</p></content>
+    </shape>
+    <line startX="72" startY="276" endX="888" endY="276"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="72" topLeftY="288" width="70" height="46">
+      <content fontSize="34" fontFamily="思源宋体" color="rgb(83,133,189)"><p>03</p></content>
+    </shape>
+    <shape type="text" topLeftX="156" topLeftY="294" width="700" height="28">
+      <content fontSize="22" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>验证证据：8 条查询，8 个绿点</p></content>
+    </shape>
+    <shape type="text" topLeftX="156" topLeftY="328" width="700" height="22">
+      <content fontSize="12" color="rgb(105,120,140)"><p>GUI 逐条验证同屏全绿 · verifyta 一次性 8/8 · Simulator 完整穿越轨迹</p></content>
+    </shape>
+    <line startX="72" startY="368" endX="888" endY="368"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="72" topLeftY="380" width="70" height="46">
+      <content fontSize="34" fontFamily="思源宋体" color="rgb(83,133,189)"><p>04</p></content>
+    </shape>
+    <shape type="text" topLeftX="156" topLeftY="386" width="700" height="28">
+      <content fontSize="22" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>结论与反思：做成了什么，还缺什么</p></content>
+    </shape>
+    <shape type="text" topLeftX="156" topLeftY="420" width="700" height="22">
+      <content fontSize="12" color="rgb(105,120,140)"><p>问题—方法—结果三段式回答 · 已证实与待补的边界 · 下一步计划</p></content>
+    </shape>
+    <line startX="72" startY="460" endX="888" endY="460"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="72" topLeftY="478" width="820" height="22">
+      <content fontSize="10" color="rgb(105,120,140)"><p>技术栈：UPPAAL 5.0.0（rev. 714BA9DB36F49691）· 查询语言含 A[]、E&lt;&gt;、--&gt; 三类 · 全部结论来自本机实际执行</p></content>
+    </shape>
+  </data>
+  <note><content fontSize="12"><p>目录这四个章节的排布是“先方法、再我的活、再证据、最后结论”。提醒听众：第三部分的每一条都能在仓库和截图里对上号。</p></content></note>
+</slide>

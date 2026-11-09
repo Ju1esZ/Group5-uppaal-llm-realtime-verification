@@ -1,0 +1,79 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="48" topLeftY="30" width="760" height="34">
+      <content fontSize="24" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>方法：三组 Prompt 做对照，一条流水线保口径</p></content>
+    </shape>
+    <line startX="48" startY="80" endX="912" endY="80"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="96" width="380" height="20">
+      <content fontSize="11" color="rgb(83,133,189)" bold="true" letterSpacing="1"><p>自变量：Prompt 的信息量</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="48" topLeftY="126" width="380" height="24">
+      <content fontSize="15" bold="true" color="rgb(24,38,58)"><p>P0 基础 Prompt　5 个样本</p></content>
+    </shape>
+    <shape type="text" topLeftX="48" topLeftY="152" width="366" height="38">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.4"><p>只说“请生成一个交通灯系统的 UPPAAL 模型”，不提供任何建模知识，测基础能力。</p></content>
+    </shape>
+    <line startX="48" startY="196" endX="414" endY="196"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="208" width="380" height="24">
+      <content fontSize="15" bold="true" color="rgb(24,38,58)"><p>P1 知识增强　5 个样本</p></content>
+    </shape>
+    <shape type="text" topLeftX="48" topLeftY="234" width="366" height="44">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.4"><p>补充时间自动机、Clock、Invariant、Channel 与同步语义，测领域知识能否减少结构性错误。</p></content>
+    </shape>
+    <line startX="48" startY="284" endX="414" endY="284"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="296" width="380" height="24">
+      <content fontSize="15" bold="true" color="rgb(24,38,58)"><p>P2 约束增强　5 个样本</p></content>
+    </shape>
+    <shape type="text" topLeftX="48" topLeftY="322" width="366" height="52">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.4"><p>再加安全冲突禁止、等待与穿越时限、查询要求与输出格式，测“把验收条件写进 Prompt”是否有效。</p></content>
+    </shape>
+    <line startX="48" startY="380" endX="414" endY="380"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="392" width="366" height="46">
+      <content fontSize="12" color="rgb(24,38,58)" lineSpacing="multiple:1.4"><p>3 组 × 5 个 = 15 个原始模型，全部进入同一套流程，只有 Prompt 不同。</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="470" topLeftY="96" width="440" height="20">
+      <content fontSize="11" color="rgb(81,157,120)" bold="true" letterSpacing="1"><p>因变量：统一处理流水线（8 步）</p></content>
+    </shape>
+    <line startX="470" startY="118" endX="470" endY="470"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <shape type="text" topLeftX="482" topLeftY="122" width="30" height="18"><content fontSize="11" bold="true" color="rgb(83,133,189)"><p>01</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="120" width="390" height="20"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>LLM 生成　原始模型 raw</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="140" width="390" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>记录 Prompt、模型、会话时间，原样留档不改一个字符</p></content></shape>
+
+    <shape type="text" topLeftX="482" topLeftY="166" width="30" height="18"><content fontSize="11" bold="true" color="rgb(83,133,189)"><p>02</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="164" width="390" height="20"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>格式检查　XML 与声明区</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="184" width="390" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>标签闭合、命名空间、常量与变量声明是否成立</p></content></shape>
+
+    <shape type="text" topLeftX="482" topLeftY="210" width="30" height="18"><content fontSize="11" bold="true" color="rgb(83,133,189)"><p>03</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="208" width="390" height="20"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>UPPAAL 导入　能打开才算数</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="228" width="390" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>导入失败按 E1–E10 错误码归类，不合并成一句“报错”</p></content></shape>
+
+    <shape type="text" topLeftX="482" topLeftY="254" width="30" height="18"><content fontSize="11" bold="true" color="rgb(83,133,189)"><p>04</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="252" width="390" height="20"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>语法错误分类　模板 / 位置 / 迁移</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="272" width="390" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>Guard、赋值、通道方向、时钟作用域逐项登记</p></content></shape>
+
+    <shape type="text" topLeftX="482" topLeftY="298" width="30" height="18"><content fontSize="11" bold="true" color="rgb(83,133,189)"><p>05</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="296" width="390" height="20"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>模型仿真　先看它会不会动</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="316" width="390" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>Simulator 手工推演，确认状态可达、同步能发能收</p></content></shape>
+
+    <shape type="text" topLeftX="482" topLeftY="342" width="30" height="18"><content fontSize="11" bold="true" color="rgb(83,133,189)"><p>06</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="340" width="390" height="20"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>属性验证　安全 / 可达 / 活性 / 时限</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="360" width="390" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>A[]、E&lt;&gt;、--&gt; 三类查询逐条跑，记录 satisfied 或反例</p></content></shape>
+
+    <shape type="text" topLeftX="482" topLeftY="386" width="30" height="18"><content fontSize="11" bold="true" color="rgb(83,133,189)"><p>07</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="384" width="390" height="20"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>人工修复　原子级改动</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="404" width="390" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>按反例定位，只改必要处，记录行数与耗时</p></content></shape>
+
+    <shape type="text" topLeftX="482" topLeftY="430" width="30" height="18"><content fontSize="11" bold="true" color="rgb(83,133,189)"><p>08</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="428" width="390" height="20"><content fontSize="13" bold="true" color="rgb(24,38,58)"><p>再次验证并与 raw 对比</p></content></shape>
+    <shape type="text" topLeftX="522" topLeftY="448" width="390" height="18"><content fontSize="10" color="rgb(105,120,140)"><p>只有重跑通过的结果才写进统计表，AI 的说法不进结论</p></content></shape>
+  </data>
+  <note><content fontSize="12"><p>左边是自变量：三组 Prompt 只差信息量。右边是因变量：所有人走同一条八步流水线，这样不同组的数字才能横向比。强调第 07 步“人工修复”是这页的核心——我们要测的正是这段人力成本。</p></content></note>
+</slide>

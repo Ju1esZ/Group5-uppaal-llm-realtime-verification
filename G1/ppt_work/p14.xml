@@ -1,0 +1,43 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="48" topLeftY="30" width="820" height="34">
+      <content fontSize="24" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>结论：已经证明了什么，还没证明什么</p></content>
+    </shape>
+    <line startX="48" startY="80" endX="912" endY="80"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <shape type="rect" topLeftX="464" topLeftY="100" width="4" height="356">
+      <fill><fillColor color="rgb(83,133,189)"/></fill>
+    </shape>
+
+    <shape type="text" topLeftX="48" topLeftY="100" width="392" height="20"><content fontSize="11" color="rgb(81,157,120)" bold="true" letterSpacing="1"><p>已证实（有工具输出与截图）</p></content></shape>
+
+    <shape type="text" topLeftX="48" topLeftY="128" width="392" height="24"><content fontSize="14" bold="true" color="rgb(24,38,58)"><p>01　行人模型 8 条性质全部满足</p></content></shape>
+    <shape type="text" topLeftX="48" topLeftY="152" width="392" height="44"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>无死锁、冲突安全、可达、活性、两条时限，命令行与 GUI 两路一致（第 10–11 页）</p></content></shape>
+
+    <shape type="text" topLeftX="48" topLeftY="204" width="392" height="24"><content fontSize="14" bold="true" color="rgb(24,38,58)"><p>02　时间约束来自推导，不是猜的</p></content></shape>
+    <shape type="text" topLeftX="48" topLeftY="228" width="392" height="44"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>13 秒上界由反例修正、可复算：剩余绿灯 + 黄灯 2 + 全红 1（第 9 页）</p></content></shape>
+
+    <shape type="text" topLeftX="48" topLeftY="280" width="392" height="24"><content fontSize="14" bold="true" color="rgb(24,38,58)"><p>03　同步闭环在模拟器里走得通</p></content></shape>
+    <shape type="text" topLeftX="48" topLeftY="304" width="392" height="44"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>walkStart / walkDone 双向对得上，Done 可回到 Approach，支持重复请求（第 12 页）</p></content></shape>
+
+    <shape type="text" topLeftX="48" topLeftY="356" width="392" height="24"><content fontSize="14" bold="true" color="rgb(24,38,58)"><p>04　统筹部分形成了可复用的口径</p></content></shape>
+    <shape type="text" topLeftX="48" topLeftY="380" width="392" height="44"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>三组 Prompt、五个指标、六道评审门禁，全组按同一流程走（第 5–6 页）</p></content></shape>
+
+    <shape type="text" topLeftX="494" topLeftY="100" width="418" height="20"><content fontSize="11" color="rgb(105,120,140)" bold="true" letterSpacing="1"><p>尚未确定 / 待补</p></content></shape>
+
+    <shape type="text" topLeftX="494" topLeftY="128" width="418" height="24"><content fontSize="14" bold="true" color="rgb(105,120,140)"><p>15 个 raw 模型的统计表</p></content></shape>
+    <shape type="text" topLeftX="494" topLeftY="152" width="418" height="60"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>可运行率、语法错误率、语义错误率、修复成本四项数字需等 G2–G8 的样本跑完后填写，本页不预设结论。</p></content></shape>
+
+    <shape type="text" topLeftX="494" topLeftY="216" width="418" height="24"><content fontSize="14" bold="true" color="rgb(105,120,140)"><p>v3 故障与超时恢复</p></content></shape>
+    <shape type="text" topLeftX="494" topLeftY="240" width="418" height="60"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>故障注入后的恢复性质尚未单独验证；目前全部结论只覆盖 v1 正常模型。</p></content></shape>
+
+    <shape type="text" topLeftX="494" topLeftY="304" width="418" height="24"><content fontSize="14" bold="true" color="rgb(105,120,140)"><p>结论的适用范围</p></content></shape>
+    <shape type="text" topLeftX="494" topLeftY="328" width="418" height="60"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.45"><p>8/8 只对“单方向单车道 + 一个行人请求”这一边界成立，多车道与复杂配时不在覆盖范围内。</p></content></shape>
+
+    <line startX="48" startY="470" endX="912" endY="470"><border color="rgb(203,212,222)" width="1"/></line>
+    <shape type="text" topLeftX="48" topLeftY="480" width="560" height="20"><content fontSize="11" color="rgb(24,38,58)"><p>下一步：补齐统计表 → 故障场景验证 → 整理进项目报告与源代码包</p></content></shape>
+    <shape type="text" topLeftX="760" topLeftY="480" width="152" height="20"><content fontSize="11" color="rgb(83,133,189)" bold="true" textAlign="right"><p>Questions</p></content></shape>
+  </data>
+  <note><content fontSize="12"><p>收尾不要喊口号。左边四条都是可以指着截图说的，右边两条明确“还没做”，这比夸大更稳：评委问起统计数字，我们说的是“正在跑”，而不是编一个通过率。</p></content></note>
+</slide>

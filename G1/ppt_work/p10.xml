@@ -1,0 +1,52 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="48" topLeftY="30" width="760" height="34">
+      <content fontSize="24" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>8 条查询逐条跑完，同屏 8 个绿点</p></content>
+    </shape>
+    <line startX="48" startY="80" endX="912" endY="80"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <img src="FBXobn9CNoYVeaxlPdCcqByZn7e" topLeftX="40" topLeftY="100" width="560" height="364"/>
+    <shape type="text" topLeftX="40" topLeftY="470" width="560" height="18">
+      <content fontSize="10" color="rgb(83,133,189)" bold="true"><p>图 3 · 验证器整屏：左侧 8 行全部为绿色状态点，右侧结果区为 satisfied 与耗时、内存占用</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="628" topLeftY="100" width="120" height="52">
+      <content fontSize="40" fontFamily="思源宋体" bold="true" color="rgb(81,157,120)"><p>8/8</p></content>
+    </shape>
+    <shape type="text" topLeftX="724" topLeftY="112" width="188" height="40">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.4"><p>条查询全部 satisfied<br/>单条耗时 0.001–0.003 秒</p></content>
+    </shape>
+    <line startX="628" startY="158" endX="912" endY="158"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="628" topLeftY="166" width="30" height="18"><content fontSize="10" color="rgb(83,133,189)" bold="true"><p>01</p></content></shape>
+    <shape type="text" topLeftX="660" topLeftY="164" width="252" height="18"><content fontSize="11" color="rgb(24,38,58)"><p>无死锁　A[] not deadlock</p></content></shape>
+
+    <shape type="text" topLeftX="628" topLeftY="192" width="30" height="18"><content fontSize="10" color="rgb(83,133,189)" bold="true"><p>02</p></content></shape>
+    <shape type="text" topLeftX="660" topLeftY="190" width="252" height="18"><content fontSize="11" color="rgb(24,38,58)"><p>穿越即行人绿灯　signal == PED_GREEN</p></content></shape>
+
+    <shape type="text" topLeftX="628" topLeftY="218" width="30" height="18"><content fontSize="10" color="rgb(83,133,189)" bold="true"><p>03</p></content></shape>
+    <shape type="text" topLeftX="660" topLeftY="216" width="252" height="18"><content fontSize="11" color="rgb(24,38,58)"><p>控制器须在 PedestrianGreen</p></content></shape>
+
+    <shape type="text" topLeftX="628" topLeftY="244" width="30" height="18"><content fontSize="10" color="rgb(83,133,189)" bold="true"><p>04</p></content></shape>
+    <shape type="text" topLeftX="660" topLeftY="242" width="252" height="18"><content fontSize="11" color="rgb(24,38,58)"><p>车与行人不同时通行　冲突安全</p></content></shape>
+
+    <shape type="text" topLeftX="628" topLeftY="270" width="30" height="18"><content fontSize="10" color="rgb(83,133,189)" bold="true"><p>05</p></content></shape>
+    <shape type="text" topLeftX="660" topLeftY="268" width="252" height="18"><content fontSize="11" color="rgb(24,38,58)"><p>行人可完成穿越　E&lt;&gt; Done</p></content></shape>
+
+    <shape type="text" topLeftX="628" topLeftY="296" width="30" height="18"><content fontSize="10" color="rgb(83,133,189)" bold="true"><p>06</p></content></shape>
+    <shape type="text" topLeftX="660" topLeftY="294" width="252" height="18"><content fontSize="11" color="rgb(24,38,58)"><p>等待必达完成　Waiting --&gt; Done</p></content></shape>
+
+    <shape type="text" topLeftX="628" topLeftY="322" width="30" height="18"><content fontSize="10" color="rgb(83,133,189)" bold="true"><p>07</p></content></shape>
+    <shape type="text" topLeftX="660" topLeftY="320" width="252" height="18"><content fontSize="11" color="rgb(24,38,58)"><p>等待 ≤ 13 秒　时限性质</p></content></shape>
+
+    <shape type="text" topLeftX="628" topLeftY="348" width="30" height="18"><content fontSize="10" color="rgb(83,133,189)" bold="true"><p>08</p></content></shape>
+    <shape type="text" topLeftX="660" topLeftY="346" width="252" height="18"><content fontSize="11" color="rgb(24,38,58)"><p>穿越 ≤ 4 秒　walking 时钟</p></content></shape>
+
+    <line startX="628" startY="382" endX="912" endY="382"><border color="rgb(224,229,235)" width="1"/></line>
+    <shape type="text" topLeftX="628" topLeftY="392" width="288" height="96">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.5"><p>绿点是“点过开始验证且通过”的状态，无法伪造：第 1 行与第 3 行最初点偏，留下灰点，必须重新选中该行再跑一次，才得到这张全绿截图。</p></content>
+    </shape>
+  </data>
+  <note><content fontSize="12"><p>这页是全套证据的核心：8 行左侧状态点全绿、右侧结果区给出 satisfied。可以指出验证器一次只跑当前选中的那一行，所以这 8 个绿点是分 8 次点出来的，中间没有清空结果。</p></content></note>
+</slide>

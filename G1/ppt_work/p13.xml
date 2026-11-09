@@ -1,0 +1,29 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="48" topLeftY="30" width="800" height="34">
+      <content fontSize="24" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>三处真实卡点：不是编的，是工具报出来的</p></content>
+    </shape>
+    <line startX="48" startY="80" endX="912" endY="80"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="104" width="46" height="30"><content fontSize="22" fontFamily="思源宋体" color="rgb(83,133,189)"><p>01</p></content></shape>
+    <shape type="text" topLeftX="106" topLeftY="102" width="800" height="26"><content fontSize="15" bold="true" color="rgb(24,38,58)"><p>局部时钟在查询文件里不认裸名</p></content></shape>
+    <shape type="text" topLeftX="106" topLeftY="130" width="806" height="64"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.55"><p>现象：.q 里直接写 crossingClock，UPPAAL 报 Unknown identifier。原因：模板内部声明的时钟属于“实例作用域”，系统层查询看不到裸名。改法：一律写 PedestrianProcess.crossingClock，XML 里内嵌的查询同步改，改完重跑才 8/8。</p></content></shape>
+    <line startX="48" startY="204" endX="912" endY="204"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="216" width="46" height="30"><content fontSize="22" fontFamily="思源宋体" color="rgb(83,133,189)"><p>02</p></content></shape>
+    <shape type="text" topLeftX="106" topLeftY="214" width="800" height="26"><content fontSize="15" bold="true" color="rgb(24,38,58)"><p>等待上界 12 秒被反例推翻，改成 13</p></content></shape>
+    <shape type="text" topLeftX="106" topLeftY="242" width="806" height="64"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.55"><p>现象：第 7 条查询返回不满足，并给出请求落在绿灯第 0 秒的反例轨迹。原因：初版把“最坏情形”当成了“最好情形”，最晚 10 秒剩余才是等待峰值。改法：WAIT_BOUND 改 13、注释写清推导链、查询注释同步，重跑全部 satisfied。</p></content></shape>
+    <line startX="48" startY="316" endX="912" endY="316"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="328" width="46" height="30"><content fontSize="22" fontFamily="思源宋体" color="rgb(83,133,189)"><p>03</p></content></shape>
+    <shape type="text" topLeftX="106" topLeftY="326" width="800" height="26"><content fontSize="15" bold="true" color="rgb(24,38,58)"><p>验证器一次只跑当前选中的那一行</p></content></shape>
+    <shape type="text" topLeftX="106" topLeftY="354" width="806" height="64"><content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.55"><p>现象：批量点圆点仍只出一条结果，点 Clear results 又把已有绿点清空。原因：执行范围由“选中行”决定，结果区是全局的。改法：逐行点行文本选中、逐行验证、不留中途清空，最后才截整屏。</p></content></shape>
+
+    <line startX="48" startY="428" endX="912" endY="428"><border color="rgb(203,212,222)" width="1"/></line>
+    <shape type="text" topLeftX="48" topLeftY="440" width="864" height="24">
+      <content fontSize="12" color="rgb(24,38,58)"><p>这三条的价值在于：每一条都能被第二次复现——换机器、换入口，结果一致，而不是“我记得当时是通过的”。</p></content>
+    </shape>
+  </data>
+  <note><content fontSize="12"><p>答辩时评委最喜欢追问“你凭什么说 8/8”。这页就是答案：三处卡点都有错误信息、定位过程与修复动作，说明结果是真跑出来的，也说明成员能解释模型。</p></content></note>
+</slide>

@@ -1,0 +1,91 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="48" topLeftY="30" width="600" height="34">
+      <content fontSize="24" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>项目架构：四层交付物，一条流水线</p></content>
+    </shape>
+    <shape type="text" topLeftX="48" topLeftY="66" width="600" height="20">
+      <content fontSize="11" color="rgb(105,120,140)" letterSpacing="0.5"><p>仓库 Group5-uppaal-llm-realtime-verification · 分支 G1 · 8 人分工</p></content>
+    </shape>
+    <line startX="48" startY="92" endX="912" endY="92"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="110" width="380" height="20">
+      <content fontSize="11" color="rgb(83,133,189)" bold="true" letterSpacing="1"><p>项目架构</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="48" topLeftY="138" width="386" height="22">
+      <content fontSize="14" bold="true" color="rgb(24,38,58)"><p>01 统筹层 · 需求与规范</p></content>
+    </shape>
+    <shape type="text" topLeftX="48" topLeftY="160" width="386" height="44">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.4"><p>系统需求与模型边界、P0/P1/P2 Prompt 方案、CTL 属性与验收矩阵、版本评审 Gate A–F、协作计划</p></content>
+    </shape>
+    <line startX="48" startY="210" endX="434" endY="210"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="222" width="386" height="22">
+      <content fontSize="14" bold="true" color="rgb(24,38,58)"><p>02 模型层 · UPPAAL 时间自动机</p></content>
+    </shape>
+    <shape type="text" topLeftX="48" topLeftY="244" width="386" height="44">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.4"><p>pedestrian_request_v1.xml（两模板 + 两通道）、pedestrian_queries.q（8 条查询）、v1 / v3 故障扩展</p></content>
+    </shape>
+    <line startX="48" startY="294" endX="434" endY="294"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="306" width="386" height="22">
+      <content fontSize="14" bold="true" color="rgb(24,38,58)"><p>03 证据层 · 可检查的验证记录</p></content>
+    </shape>
+    <shape type="text" topLeftX="48" topLeftY="328" width="386" height="44">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.4"><p>verifyta 一次性 8/8 输出、GUI 逐条验证的绿点截图、Simulator 完整请求周期轨迹</p></content>
+    </shape>
+    <line startX="48" startY="378" endX="434" endY="378"><border color="rgb(224,229,235)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="390" width="386" height="22">
+      <content fontSize="14" bold="true" color="rgb(24,38,58)"><p>04 交付层 · 考核材料</p></content>
+    </shape>
+    <shape type="text" topLeftX="48" topLeftY="412" width="386" height="44">
+      <content fontSize="11" color="rgb(105,120,140)" lineSpacing="multiple:1.4"><p>项目报告.pdf、源代码.zip、AI 使用记录.md、项目 PPT.pptx，统一放入“第 5 组-小组项目”文件夹</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="474" topLeftY="110" width="440" height="20">
+      <content fontSize="11" color="rgb(83,133,189)" bold="true" letterSpacing="1"><p>小组分工（G1 为本人）</p></content>
+    </shape>
+    <table topLeftX="474" topLeftY="136" width="438" height="352">
+      <colgroup><col width="46"/><col width="392"/></colgroup>
+      <tr height="26">
+        <td><fill><fillColor color="rgb(30,60,120)"/></fill><content fontSize="11" bold="true" color="rgb(255,255,255)" textAlign="center"><p>成员</p></content></td>
+        <td><fill><fillColor color="rgb(30,60,120)"/></fill><content fontSize="11" bold="true" color="rgb(255,255,255)" textAlign="left"><p>主要工作与输出</p></content></td>
+      </tr>
+      <tr height="42">
+        <td><fill><fillColor color="rgb(232,238,245)"/></fill><content fontSize="11" bold="true" color="rgb(30,60,120)" textAlign="center"><p>G1</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>需求边界、Prompt 实验方案、指标口径、版本评审；个人行人模型</p></content></td>
+      </tr>
+      <tr height="42">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="center"><p>G2</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>三组 Prompt 编写与 LLM 调用，原始模型归档</p></content></td>
+      </tr>
+      <tr height="42">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="center"><p>G3</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>模板、位置、迁移结构检查与语法错误分类</p></content></td>
+      </tr>
+      <tr height="42">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="center"><p>G4</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>通道、同步、全局变量检查与同步死锁分析</p></content></td>
+      </tr>
+      <tr height="42">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="center"><p>G5</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>基础车辆模型 v1 构建、时钟与不变量修复</p></content></td>
+      </tr>
+      <tr height="42">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="center"><p>G6</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>故障注入与超时恢复，v3 模型与仿真录制</p></content></td>
+      </tr>
+      <tr height="42">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="center"><p>G7</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>安全与活性属性设计、模型检测、反例定位</p></content></td>
+      </tr>
+      <tr height="42">
+        <td><content fontSize="11" bold="true" color="rgb(24,38,58)" textAlign="center"><p>G8</p></content></td>
+        <td><content fontSize="10" textAlign="left" lineSpacing="multiple:1.3"><p>时限属性设计、错误率与通过率统计汇总</p></content></td>
+      </tr>
+    </table>
+  </data>
+  <note><content fontSize="12"><p>先说清楚“东西在哪”：这页左边是四层交付物，右边是八个人的接口。强调 G1 不只是文档，还有自己的模型与验证证据，后面第二部分就讲这条线。</p></content></note>
+</slide>

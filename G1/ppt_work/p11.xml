@@ -1,0 +1,47 @@
+<slide xmlns="https://www.larkoffice.com/sml/2.0">
+  <style><fill><fillColor color="rgb(252,252,250)"/></fill></style>
+  <data>
+    <shape type="text" topLeftX="48" topLeftY="30" width="780" height="34">
+      <content fontSize="24" fontFamily="思源宋体" bold="true" color="rgb(24,38,58)"><p>两条路径互相对账：命令行 8/8，GUI 逐条同绿</p></content>
+    </shape>
+    <line startX="48" startY="80" endX="912" endY="80"><border color="rgb(203,212,222)" width="1"/></line>
+
+    <shape type="text" topLeftX="48" topLeftY="92" width="470" height="20"><content fontSize="11" color="rgb(83,133,189)" bold="true" letterSpacing="1"><p>路径一：verifyta 一次性跑完 8 条</p></content></shape>
+    <shape type="rect" topLeftX="48" topLeftY="118" width="470" height="238">
+      <fill><fillColor color="rgb(240,242,244)"/></fill>
+    </shape>
+    <shape type="text" topLeftX="62" topLeftY="128" width="444" height="220">
+      <content fontSize="11" fontFamily="Roboto Mono" color="rgb(24,38,58)" lineSpacing="multiple:1.55"><p>cd Group5-uppaal-llm-realtime-verification
+./verifyta -t 1 -y G1/pedestrian_request_v1.xml \
+            G1/pedestrian_queries.q
+
+Verifying formula 1 at line 1
+Formula is satisfied.
+...
+Verifying formula 7 at line 7
+Formula is satisfied.
+Verifying formula 8 at line 8
+Formula is satisfied.
+
+$ grep -c "Formula is satisfied"  →  8</p></content>
+    </shape>
+
+    <shape type="text" topLeftX="560" topLeftY="92" width="352" height="20"><content fontSize="11" color="rgb(81,157,120)" bold="true" letterSpacing="1"><p>为什么要两条路都走</p></content></shape>
+    <shape type="text" topLeftX="560" topLeftY="118" width="352" height="66">
+      <content fontSize="11" color="rgb(24,38,58)" lineSpacing="multiple:1.5"><p>命令行是批量证据：一条命令出 8 个 satisfied，可复现、可核对，不受界面状态影响。</p></content>
+    </shape>
+    <shape type="text" topLeftX="560" topLeftY="190" width="352" height="72">
+      <content fontSize="11" color="rgb(24,38,58)" lineSpacing="multiple:1.5"><p>GUI 是可视化证据：能看到每条性质原文、状态点颜色、耗时与内存，答辩现场可再点一次。</p></content>
+    </shape>
+    <shape type="text" topLeftX="560" topLeftY="268" width="352" height="88">
+      <content fontSize="11" color="rgb(24,38,58)" lineSpacing="multiple:1.5"><p>两者一致说明结论不依赖某个入口：换工具、换机器，同一模型同一查询组仍然 8/8。</p></content>
+    </shape>
+
+    <line startX="48" startY="368" endX="912" endY="368"><border color="rgb(224,229,235)" width="1"/></line>
+    <img src="IHEsbEyX5os2QlxEce4ciwXYnTg" topLeftX="48" topLeftY="382" width="780" height="70"/>
+    <shape type="text" topLeftX="48" topLeftY="458" width="860" height="18">
+      <content fontSize="10" color="rgb(83,133,189)" bold="true"><p>图 4 · GUI 单条查询的结果条：第 8 条“穿越 ≤ 4 秒”给出 satisfied，附带状态空间与耗时</p></content>
+    </shape>
+  </data>
+  <note><content fontSize="12"><p>这页回答“凭什么信”。命令行一条命令出八个 satisfied，是最硬的证据；GUI 截图让评委看到性质原文与状态点。两边数字对得上，说明不是某一次偶然。</p></content></note>
+</slide>
