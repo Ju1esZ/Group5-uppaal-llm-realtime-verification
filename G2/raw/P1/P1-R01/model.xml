@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_1.dtd">
+<nta>
+  <declaration>
+clock lightClock;
+const int GREEN = 0;
+const int YELLOW = 1;
+const int RED = 2;
+int[0,2] signal = GREEN;
+  </declaration>
+
+  <template>
+    <name>TrafficLight</name>
+    <declaration></declaration>
+
+    <location id="light_init" x="0" y="0">
+      <name x="-15" y="-30">Init</name>
+      <committed/>
+    </location>
+    <location id="light_green" x="180" y="0">
+      <name x="160" y="-50">Green</name>
+      <label kind="invariant" x="140" y="25">lightClock &lt;= 20</label>
+    </location>
+    <location id="light_yellow" x="400" y="0">
+      <name x="380" y="-50">Yellow</name>
+      <label kind="invariant" x="360" y="25">lightClock &lt;= 3</label>
+    </location>
+    <location id="light_red" x="290" y="200">
+      <name x="275" y="220">Red</name>
+      <label kind="invariant" x="250" y="245">lightClock &lt;= 20</label>
+    </location>
+
+    <init ref="light_init"/>
+
+    <transition>
+      <source ref="light_init"/>
+      <target ref="light_green"/>
+      <label kind="assignment" x="20" y="-70">lightClock = 0, signal = GREEN</label>
+    </transition>
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_yellow"/>
+      <label kind="guard" x="220" y="-65">lightClock == 20</label>
+      <label kind="assignment" x="205" y="-40">lightClock = 0, signal = YELLOW</label>
+    </transition>
+    <transition>
+      <source ref="light_yellow"/>
+      <target ref="light_red"/>
+      <label kind="guard" x="400" y="90">lightClock == 3</label>
+      <label kind="assignment" x="400" y="115">lightClock = 0, signal = RED</label>
+    </transition>
+    <transition>
+      <source ref="light_red"/>
+      <target ref="light_green"/>
+      <label kind="guard" x="30" y="90">lightClock == 20</label>
+      <label kind="assignment" x="0" y="115">lightClock = 0, signal = GREEN</label>
+    </transition>
+  </template>
+
+  <template>
+    <name>Vehicle</name>
+    <declaration>
+clock arrivalClock, crossingClock;
+bool enteredOnGreen = false;
+    </declaration>
+
+    <location id="vehicle_init" x="0" y="400">
+      <name x="-15" y="370">Init</name>
+      <committed/>
+    </location>
+    <location id="vehicle_approaching" x="200" y="400">
+      <name x="160" y="350">Approaching</name>
+      <label kind="invariant" x="150" y="425">arrivalClock &lt;= 5</label>
+    </location>
+    <location id="vehicle_waiting" x="450" y="400">
+      <name x="425" y="370">Waiting</name>
+    </location>
+    <location id="vehicle_crossing" x="700" y="400">
+      <name x="670" y="350">Crossing</name>
+      <label kind="invariant" x="650" y="425">crossingClock &lt;= 3</label>
+    </location>
+    <location id="vehicle_done" x="950" y="400">
+      <name x="930" y="370">Done</name>
+    </location>
+
+    <init ref="vehicle_init"/>
+
+    <transition>
+      <source ref="vehicle_init"/>
+      <target ref="vehicle_approaching"/>
+      <label kind="assignment" x="30" y="330">arrivalClock = 0</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_approaching"/>
+      <target ref="vehicle_waiting"/>
+      <label kind="guard" x="230" y="300">arrivalClock &gt;= 1 &amp;&amp; arrivalClock &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_waiting"/>
+      <target ref="vehicle_crossing"/>
+      <label kind="guard" x="460" y="275">signal == GREEN &amp;&amp; lightClock &lt; 20</label>
+      <label kind="assignment" x="460" y="300">crossingClock = 0, enteredOnGreen = true</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_crossing"/>
+      <target ref="vehicle_done"/>
+      <label kind="guard" x="720" y="330">crossingClock &gt;= 2 &amp;&amp; crossingClock &lt;= 3</label>
+    </transition>
+  </template>
+
+  <system>
+Light = TrafficLight();
+Car = Vehicle();
+system Light, Car;
+  </system>
+
+  <queries>
+    <query>
+      <formula>A[] not deadlock</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (Car.Crossing imply Car.enteredOnGreen)</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (Car.Crossing imply not Light.Red)</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; Car.Done</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>Car.Waiting --&gt; (E&lt;&gt; Car.Done)</formula>
+      <comment></comment>
+    </query>
+  </queries>
+</nta>

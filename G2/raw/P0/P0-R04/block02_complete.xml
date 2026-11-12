@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd">
+<nta>
+  <declaration>// 时间单位：秒。
+// 当车辆等待且交通灯为绿灯时，立即同步通行。
+urgent chan pass;</declaration>
+
+  <template>
+    <name>TrafficLight</name>
+    <declaration>clock t;</declaration>
+
+    <location id="light_green" x="0" y="0">
+      <name x="-20" y="-35">Green</name>
+      <label kind="invariant" x="-25" y="20">t &lt;= 20</label>
+    </location>
+    <location id="light_yellow" x="250" y="0">
+      <name x="225" y="-35">Yellow</name>
+      <label kind="invariant" x="225" y="20">t &lt;= 3</label>
+    </location>
+    <location id="light_red" x="500" y="0">
+      <name x="485" y="-35">Red</name>
+      <label kind="invariant" x="475" y="20">t &lt;= 20</label>
+    </location>
+
+    <init ref="light_green"/>
+
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_yellow"/>
+      <label kind="guard" x="85" y="-65">t == 20</label>
+      <label kind="assignment" x="85" y="-40">t = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_yellow"/>
+      <target ref="light_red"/>
+      <label kind="guard" x="335" y="-65">t == 3</label>
+      <label kind="assignment" x="335" y="-40">t = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_red"/>
+      <target ref="light_green"/>
+      <label kind="guard" x="215" y="120">t == 20</label>
+      <label kind="assignment" x="215" y="145">t = 0</label>
+      <nail x="500" y="100"/>
+      <nail x="0" y="100"/>
+    </transition>
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_green"/>
+      <label kind="synchronisation" x="-100" y="-100">pass!</label>
+      <nail x="-75" y="-60"/>
+      <nail x="0" y="-90"/>
+    </transition>
+  </template>
+
+  <template>
+    <name>Vehicle</name>
+    <declaration>clock c;</declaration>
+
+    <location id="car_approach" x="0" y="0">
+      <name x="-35" y="-35">Approaching</name>
+      <label kind="invariant" x="-20" y="20">c &lt;= 5</label>
+    </location>
+    <location id="car_wait" x="250" y="0">
+      <name x="225" y="-35">Waiting</name>
+    </location>
+    <location id="car_cross" x="500" y="0">
+      <name x="470" y="-35">Crossing</name>
+      <label kind="invariant" x="480" y="20">c &lt;= 3</label>
+    </location>
+    <location id="car_done" x="750" y="0">
+      <name x="735" y="-35">Done</name>
+    </location>
+
+    <init ref="car_approach"/>
+
+    <transition>
+      <source ref="car_approach"/>
+      <target ref="car_wait"/>
+      <label kind="guard" x="85" y="-65">c &gt;= 1</label>
+      <label kind="assignment" x="85" y="-40">c = 0</label>
+    </transition>
+    <transition>
+      <source ref="car_wait"/>
+      <target ref="car_cross"/>
+      <label kind="synchronisation" x="335" y="-65">pass?</label>
+      <label kind="assignment" x="335" y="-40">c = 0</label>
+    </transition>
+    <transition>
+      <source ref="car_cross"/>
+      <target ref="car_done"/>
+      <label kind="guard" x="585" y="-40">c &gt;= 2</label>
+    </transition>
+  </template>
+
+  <system>Light = TrafficLight();
+Car = Vehicle();
+system Light, Car;</system>
+
+  <queries/>
+</nta>

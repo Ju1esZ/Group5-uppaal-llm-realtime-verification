@@ -1,0 +1,19 @@
+{
+  "sample": "P1-R01",
+  "xml_parse": "PASS",
+  "reference_check": "PASS",
+  "templates": 2,
+  "locations": 9,
+  "transitions": 8,
+  "external_query_count": 4,
+  "embedded_queries": [
+    "A[] not deadlock",
+    "A[] (Car.Crossing imply Car.enteredOnGreen)",
+    "A[] (Car.Crossing imply not Light.Red)",
+    "E<> Car.Done",
+    "Car.Waiting --> (E<> Car.Done)"
+  ],
+  "embedded_matches_external": false,
+  "uppaal": "NOT_RUN",
+  "model_sha256": "a717177311c81a354e522e7436e23f0e93630c928237149b935a3eae024f9fcb"
+}

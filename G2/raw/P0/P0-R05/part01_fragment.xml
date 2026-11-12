@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+  <declaration>
+// Time unit: one second.
+// Synchronization occurs immediately when the car is waiting
+// and the traffic light is green.
+urgent chan pass;
+  </declaration>
+
+  <template>
+    <name>TrafficLight</name>
+    <declaration>clock t;</declaration>
+
+    <location id="light_green" x="0" y="0">
+      <name x="-20" y="-40">Green</name>
+      <label kind="invariant" x="-25" y="20">t &lt;= 20</label>
+    </location>
+    <location id="light_yellow" x="250" y="0">
+      <name x="225" y="-40">Yellow</name>
+      <label kind="invariant" x="225" y="20">t &lt;= 3</label>
+    </location>
+    <location id="light_red" x="125" y="200">
+      <name x="110" y="220">Red</name>
+      <label kind="invariant" x="100" y="245">t &lt;= 20</label>
+    </location>
+
+    <init ref="light_green"/>
+
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_yellow"/>
+      <label kind="guard" x="90" y="-60">t == 20</label>
+      <label kind="assignment" x="90" y="-40">t = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_yellow"/>
+      <target ref="light_red"/>
+      <label kind="guard" x="210" y="85">t == 3</label>
+      <label kind="assignment" x="210" y="105">t = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_red"/>
+      <target ref="light_green"/>
+      <label kind="guard" x="-25" y="85">t == 20</label>
+      <label kind="assignment" x="-25" y="105">t = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_green"/>
+      <label kind="synchronisation" x="-120" y="-65">pass!</label>
+      <nail x="-90" y="-80"/>
+      <nail x="-90" y="0"/>
+    </transition>
+  </template>
+
+  <template>
+    <name>Vehicle</name>
+    <declaration>clock c;</declaration>
+
+    <location id="car_approaching" x="0" y="0">
+      <name x="-40" y="-40">Approaching</name>
+      <label kind="invariant" x="-25" y="20">c &lt;= 5</label>
+    </location>
+    <location id="car_waiting" x="250" y="0">
+      <name x="225" y="-40">Waiting</name>
+    </location>
+    <location id="car_crossing" x="500" y="0">
+      <name x="470" y="-40">Crossing</name>
+      <label kind="invariant" x="475" y="20">c &lt;= 3</label>
+    </location>
+    <location id="car_done" x="750" y="0">
+      <name x="730" y="-40">Done</name>
+    </location>
+
+    <init ref="car_approaching"/>
+
+    <transition>
+      <source ref="car_approaching"/>
+      <target ref="car_waiting"/>
+      <label kind="guard" x="80" y="-60">c &gt;= 1 &amp;&amp; c &lt
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+{
+  "xml_parse": "PASS",
+  "templates": 2,
+  "locations": 7,
+  "transitions": 6,
+  "reference_check": "PASS",
+  "query_count": 3,
+  "embedded_queries_match": true,
+  "uppaal": "NOT_RUN",
+  "sha256": {
+    "response.md": "28c83d772ae0c48491d117278ad611d09fcd952b22e76152e5ec4b9c7c2aae6b",
+    "model.xml": "ce75f1e9b9c7b7a86ba82fa857d0fbd3500768c9edffc15d580c88eb1edd13cf",
+    "queries.q": "912e6970d42f177d082a63673c7a7c6abf84463332ef911cc0fc45ce3154ad21"
+  }
+}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd">
+<nta>
+  <declaration>
+clock lightClock;
+bool occupied = false;
+const int GREEN = 0;
+const int YELLOW = 1;
+const int RED = 2;
+int[0,2] signal = GREEN;
+  </declaration>
+
+  <template>
+    <name>TrafficLight</name>
+    <declaration></declaration>
+
+    <location id="light_green" x="0" y="0">
+      <name x="-20" y="-30">Green</name>
+      <label kind="invariant" x="-60" y="25">lightClock &lt;= 20</label>
+    </location>
+    <location id="light_yellow" x="250" y="0">
+      <name x="230" y="-30">Yellow</name>
+      <label kind="invariant" x="200" y="25">lightClock &lt;= 3</label>
+    </location>
+    <location id="light_red" x="500" y="0">
+      <name x="485" y="-30">Red</name>
+      <label kind="invariant" x="450" y="25">lightClock &lt;= 20</label>
+    </location>
+
+    <init ref="light_green"/>
+
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_yellow"/>
+      <label kind="guard" x="45" y="-100">lightClock &gt;= 20 &amp;&amp; !occupied</label>
+      <label kind="assignment" x="45" y="-75">lightClock = 0, signal = YELLOW</label>
+    </transition>
+    <transition>
+      <source ref="light_yellow"/>
+      <target ref="light_red"/>
+      <label kind="guard" x="300" y="-100">lightClock &gt;= 3</label>
+      <label kind="assignment" x="300" y="-75">lightClock = 0, signal = RED</label>
+    </transition>
+    <transition>
+      <source ref="light_red"/>
+      <target ref="light_green"/>
+      <label kind="guard" x="190" y="115">lightClock &gt;= 20</label>
+      <label kind="assignment" x="190" y="140">lightClock = 0, signal = GREEN</label>
+      <nail x="500" y="100"/>
+      <nail x="0" y="100"/>
+    </transition>
+  </template>
+
+  <template>
+    <name>Vehicle</name>
+    <declaration>clock carClock;</declaration>
+
+    <location id="vehicle_approaching" x="0" y="300">
+      <name x="-40" y="270">Approaching</name>
+      <label kind="invariant" x="-45" y="325">carClock &lt;= 5</label>
+    </location>
+    <location id="vehicle_waiting" x="250" y="300">
+      <name x="225" y="270">Waiting</name>
+    </location>
+    <location id="vehicle_crossing" x="550" y="300">
+      <name x="525" y="270">Crossing</name>
+      <label kind="invariant" x="505" y="325">carClock &lt;= 3</label>
+    </location>
+    <location id="vehicle_done" x="800" y="300">
+      <name x="785" y="270">Done</name>
+    </location>
+
+    <init ref="vehicle_approaching"/>
+
+    <transition>
+      <source ref="vehicle_approaching"/>
+      <target ref="vehicle_waiting"/>
+      <label kind="guard" x="45" y="200">carClock &gt;= 1 &amp;&amp; carClock &lt;= 5</label>
+      <label kind="assignment" x="75" y="225">carClock = 0</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_waiting"/>
+      <target ref="vehicle_crossing"/>
+      <label kind="guard" x="255" y="150">signal == GREEN &amp;&amp; lightClock &lt;= 17 &amp;&amp; !occupied</label>
+      <label kind="assignment" x="310" y="175">carClock = 0, occupied = true</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_crossing"/>
+      <target ref="vehicle_done"/>
+      <label kind="guard" x="570" y="200">carClock &gt;= 2 &amp;&amp; carClock &lt;= 3</label>
+      <label kind="assignment" x="600" y="225">occupied = false</label>
+    </transition>
+  </template>
+
+  <system>
+L = TrafficLight();
+V = Vehicle();
+system L, V;
+  </system>
+
+  <queries>
+    <query>
+      <formula>A[] not deadlock</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (V.Crossing imply (L.Green &amp;&amp; signal == GREEN))</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; V.Done</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (V.Crossing imply occupied)</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (V.Done imply !occupied)</formula>
+      <comment></comment>
+    </query>
+  </queries>
+</nta>

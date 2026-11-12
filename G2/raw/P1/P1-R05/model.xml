@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+  <declaration>
+clock phase;
+bool green = false;
+  </declaration>
+  <template>
+    <name>TrafficLight</name>
+    <declaration></declaration>
+    <location id="tl_init" x="0" y="0">
+      <name x="-15" y="-30">Init</name>
+      <committed/>
+    </location>
+    <location id="tl_green" x="200" y="0">
+      <name x="180" y="-50">Green</name>
+      <label kind="invariant" x="160" y="-30">phase &lt;= 20</label>
+    </location>
+    <location id="tl_yellow" x="400" y="0">
+      <name x="380" y="-50">Yellow</name>
+      <label kind="invariant" x="360" y="-30">phase &lt;= 3</label>
+    </location>
+    <location id="tl_red" x="300" y="200">
+      <name x="280" y="220">Red</name>
+      <label kind="invariant" x="260" y="240">phase &lt;= 20</label>
+    </location>
+    <init ref="tl_init"/>
+    <transition>
+      <source ref="tl_init"/>
+      <target ref="tl_green"/>
+      <label kind="assignment" x="30" y="20">phase = 0, green = true</label>
+    </transition>
+    <transition>
+      <source ref="tl_green"/>
+      <target ref="tl_yellow"/>
+      <label kind="guard" x="230" y="-80">phase &gt;= 20</label>
+      <label kind="assignment" x="210" y="-60">phase = 0, green = false</label>
+    </transition>
+    <transition>
+      <source ref="tl_yellow"/>
+      <target ref="tl_red"/>
+      <label kind="guard" x="380" y="80">phase &gt;= 3</label>
+      <label kind="assignment" x="380" y="100">phase = 0, green = false</label>
+    </transition>
+    <transition>
+      <source ref="tl_red"/>
+      <target ref="tl_green"/>
+      <label kind="guard" x="100" y="100">phase &gt;= 20</label>
+      <label kind="assignment" x="70" y="120">phase = 0, green = true</label>
+    </transition>
+  </template>
+  <template>
+    <name>Vehicle</name>
+    <declaration>
+clock arrival;
+clock crossing;
+    </declaration>
+    <location id="v_init" x="0" y="0">
+      <name x="-15" y="-30">Init</name>
+      <committed/>
+    </location>
+    <location id="v_approach" x="200" y="0">
+      <name x="170" y="-50">Approach</name>
+      <label kind="invariant" x="160" y="-30">arrival &lt;= 5</label>
+    </location>
+    <location id="v_wait" x="400" y="0">
+      <name x="380" y="-30">Wait</name>
+    </location>
+    <location id="v_crossing" x="600" y="0">
+      <name x="570" y="-50">Crossing</name>
+      <label kind="invariant" x="550" y="-30">crossing &lt;= 3</label>
+    </location>
+    <location id="v_done" x="800" y="0">
+      <name x="780" y="-30">Done</name>
+    </location>
+    <init ref="v_init"/>
+    <transition>
+      <source ref="v_init"/>
+      <target ref="v_approach"/>
+      <label kind="assignment" x="50" y="20">arrival = 0</label>
+    </transition>
+    <transition>
+      <source ref="v_approach"/>
+      <target ref="v_wait"/>
+      <label kind="guard" x="230" y="20">arrival &gt;= 1 &amp;&amp; arrival &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="v_wait"/>
+      <target ref="v_crossing"/>
+      <label kind="guard" x="420" y="-80">green &amp;&amp; phase &lt; 20</label>
+      <label kind="assignment" x="450" y="-60">crossing = 0</label>
+    </transition>
+    <transition>
+      <source ref="v_crossing"/>
+      <target ref="v_done"/>
+      <label kind="guard" x="620" y="20">crossing &gt;= 2 &amp;&amp; crossing &lt;= 3</label>
+    </transition>
+  </template>
+  <system>
+TL = TrafficLight();
+V = Vehicle();
+system TL, V;
+  </system>
+  <queries>
+    <query>
+      <formula>A[] not deadlock</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (V.Crossing imply (TL.Green || TL.Yellow))</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (V.Done imply crossing &gt;= 2)</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; V.Done</formula>
+      <comment></comment>
+    </query>
+  </queries>
+</nta>

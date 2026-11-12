@@ -1,0 +1,18 @@
+{
+  "sample": "P1-R05",
+  "xml_parse": "PASS",
+  "reference_check": "PASS",
+  "templates": 2,
+  "locations": 9,
+  "transitions": 8,
+  "external_query_count": 4,
+  "embedded_queries": [
+    "A[] not deadlock",
+    "A[] (V.Crossing imply (TL.Green || TL.Yellow))",
+    "A[] (V.Done imply crossing >= 2)",
+    "E<> V.Done"
+  ],
+  "embedded_matches_external": true,
+  "uppaal": "NOT_RUN",
+  "model_sha256": "2f7da54dc22126e469d4435d7337e4ebc308d6244205761d3069c736e47bb618"
+}

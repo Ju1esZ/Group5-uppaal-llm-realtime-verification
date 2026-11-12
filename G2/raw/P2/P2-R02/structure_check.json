@@ -1,0 +1,12 @@
+{
+  "sample": "P2-R02",
+  "xml_parse": "PASS",
+  "reference_check": "PASS",
+  "templates": 2,
+  "locations": 7,
+  "transitions": 6,
+  "query_count": 5,
+  "embedded_matches_external": true,
+  "uppaal": "NOT_RUN",
+  "model_sha256": "d81dc4accf66856c91c1535db76a53a4d0342c6e7e44bdead2aa0b17250069e0"
+}

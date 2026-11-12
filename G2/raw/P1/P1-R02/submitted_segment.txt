@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd">
+<nta>
+  <declaration>urgent chan pass;</declaration>
+
+  <template>
+    <name>TrafficLight</name>
+    <declaration>clock phase;</declaration>
+
+    <location id="light_init" x="-200" y="0">
+      <name x="-220" y="-30">Init</name>
+      <committed/>
+    </location>
+    <location id="light_green" x="0" y="0">
+      <name x="-20" y="-50">Green</name>
+      <label kind="invariant" x="-30" y="-30">phase &lt;= 20</label>
+    </location>
+    <location id="light_yellow" x="250" y="0">
+      <name x="230" y="-50">Yellow</name>
+      <label kind="invariant" x="220" y="-30">phase &lt;= 3</label>
+    </location>
+    <location id="light_red" x="125" y="200">
+      <name x="105" y="220">Red</name>
+      <label kind="invariant" x="95" y="240">phase &lt;= 20</label>
+    </location>
+
+    <init ref="light_init"/>
+
+    <transition>
+      <source ref="light_init"/>
+      <target ref="light_green"/>
+      <label kind="assignment" x="-160" y="20">phase = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_yellow"/>
+      <label kind="guard" x="70" y="-60">phase == 20</label>
+      <label kind="assignment" x="70" y="-40">phase = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_yellow"/>
+      <target ref="light_red"/>
+      <label kind="guard" x="210" y="90">phase == 3</label>
+      <label kind="assignment" x="210" y="110">phase = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_red"/>
+      <target ref="light_green"/>
+      <label kind="guard" x="-55" y="100">phase == 20</label>
+      <label kind="assignment" x="-55" y="120">phase = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_green"/>
+      <label kind="synchronisation" x="-50" y="-120">pass!</label>
+      <nail x="-60" y="-90"/>
+      <nail x="60" y="-90"/>
+    </transition>
+  </template>
+
+  <template>
+    <name>Vehicle</name>
+    <declaration>clock arrival, crossing;</declaration>
+
+    <location id="vehicle_init" x="-200" y="0">
+      <name x="-220" y="-30">Init</name>
+      <committed/>
+    </location>
+    <location id="vehicle_approach" x="0" y="0">
+      <name x="-30" y="-50">Approaching</name>
+      <label kind="invariant" x="-35" y="-30">arrival &lt;= 5</label>
+    </location>
+    <location id="vehicle_wait" x="250" y="0">
+      <name x="225" y="-30">Waiting</name>
+    </location>
+    <location id="vehicle_cross" x="500" y="0">
+      <name x="475" y="-50">Crossing</name>
+      <label kind="invariant" x="460" y="-30">crossing &lt;= 3</label>
+    </location>
+    <location id="vehicle_done" x="750" y="0">
+      <name x="730" y="-30">Done</name>
+    </location>
+
+    <init ref="vehicle_init"/>
+
+    <transition>
+      <source ref="vehicle_init"/>
+      <target ref="vehicle_approach"/>
+      <label kind="assignment" x="-165" y="20">arrival = 0</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_approach"/>
+      <target ref="vehicle_wait"/>
+      <label kind="guard" x="65" y="-30">arrival &gt;= 1 &amp;&amp; arrival &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_wait"/>
+      <target ref="vehicle_cross"/>
+      <label kind="synchronisation" x="330" y="-40">pass?</label>
+      <label kind="assignment" x="330" y="-20">crossing = 0</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_cross"/>
+      <target ref="vehicle_done"/>
+      <label kind="guard" x="535" y="-30">crossing &gt;= 2 &amp;&amp; crossing &lt;= 3</label>
+    </transition>
+  </template>
+
+  <system>
+Light = TrafficLight();
+Car = Vehicle();
+system Light, Car;
+  </system>
+  <queries/>
+</nta>
+A[] not deadlock
+A[] (Car.Crossing imply Light.Green)
+A<> Car.Done
+E<> Car.Done

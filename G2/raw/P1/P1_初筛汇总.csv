@@ -1,0 +1,6 @@
+﻿编号,XML解析,位置与边引用,外部查询数,内嵌查询数,UPPAAL验证,静态观察
+P1-R01,PASS,PASS,4,5,未运行,进入条件lightClock<20允许第19秒进入，至少穿越2秒，故存在第20秒变黄后仍在Crossing的静态反例。enteredOnGreen只记录进入事件，且在进入时无条件置true，不能证明全程绿灯；not Light.Red也允许黄灯。内嵌Car.Waiting --> (E<> Car.Done)含不支持的嵌套时序查询。外部仅4条，内嵌5条，差异原样保留；是否粘贴遗漏待确认。DTD URL为flat-1_1.dtd，未核验外部DTD或工具兼容性。
+P1-R02,PASS,PASS,4,0,未运行,urgent同步使当前初始绿灯与1至5秒到达范围下车辆立即穿越，推断全局3至8秒完成。没有显式剩余绿灯检查，晚到场景在现有模型中不可达。内嵌查询为空，外部4条，并非必然错误。
+P1-R03,PASS,PASS,3,3,未运行,进入要求phaseClock<=17并置crossing=true，完成后清除，灯切换检查!crossing；与G5核心保护相近。允许无限等待，不能从存在完成路径推导必然完成。
+P1-R04,PASS,PASS,6,6,未运行,进入要求lightClock<=17并有crossing占用保护。Waiting允许无限等待，因此额外A<> V.Done和V.Waiting --> V.Done预计不满足，需工具确认。初始committed位置在零时间初始化，未因初始lightState=2直接判错。DTD引用待工具检查。
+P1-R05,PASS,PASS,4,4,未运行,进入条件phase<20允许第19秒进入并在黄灯穿越，违反G1全程绿灯要求。自带安全查询允许Green或Yellow，弱于统一基线。查询A[] (V.Done imply crossing>=2)使用未限定的局部时钟，crossing声明在Vehicle内，需通过实例V.crossing引用；不修改原始查询。

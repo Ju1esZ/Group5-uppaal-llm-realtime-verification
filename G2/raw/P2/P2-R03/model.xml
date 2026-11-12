@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd">
+<nta>
+  <declaration>
+clock phaseClock;
+bool green = false;
+bool occupied = false;
+  </declaration>
+
+  <template>
+    <name>TrafficLight</name>
+    <declaration></declaration>
+
+    <location id="tl_init" x="0" y="0">
+      <name x="-20" y="-30">Init</name>
+      <committed/>
+    </location>
+    <location id="tl_green" x="200" y="0">
+      <name x="180" y="-50">Green</name>
+      <label kind="invariant" x="160" y="-30">phaseClock &lt;= 20</label>
+    </location>
+    <location id="tl_yellow" x="400" y="0">
+      <name x="380" y="-50">Yellow</name>
+      <label kind="invariant" x="360" y="-30">phaseClock &lt;= 3</label>
+    </location>
+    <location id="tl_red" x="400" y="200">
+      <name x="380" y="220">Red</name>
+      <label kind="invariant" x="360" y="240">phaseClock &lt;= 20</label>
+    </location>
+
+    <init ref="tl_init"/>
+
+    <transition>
+      <source ref="tl_init"/>
+      <target ref="tl_green"/>
+      <label kind="assignment" x="30" y="20">phaseClock = 0, green = true</label>
+    </transition>
+    <transition>
+      <source ref="tl_green"/>
+      <target ref="tl_yellow"/>
+      <label kind="guard" x="220" y="-100">phaseClock == 20 &amp;&amp; !occupied</label>
+      <label kind="assignment" x="220" y="-80">phaseClock = 0, green = false</label>
+    </transition>
+    <transition>
+      <source ref="tl_yellow"/>
+      <target ref="tl_red"/>
+      <label kind="guard" x="420" y="70">phaseClock == 3</label>
+      <label kind="assignment" x="420" y="90">phaseClock = 0</label>
+    </transition>
+    <transition>
+      <source ref="tl_red"/>
+      <target ref="tl_green"/>
+      <label kind="guard" x="160" y="130">phaseClock == 20</label>
+      <label kind="assignment" x="140" y="150">phaseClock = 0, green = true</label>
+    </transition>
+  </template>
+
+  <template>
+    <name>Vehicle</name>
+    <declaration>
+clock arrivalClock;
+clock crossingClock;
+    </declaration>
+
+    <location id="v_init" x="0" y="0">
+      <name x="-20" y="-30">Init</name>
+      <committed/>
+    </location>
+    <location id="v_approaching" x="200" y="0">
+      <name x="160" y="-50">Approaching</name>
+      <label kind="invariant" x="160" y="-30">arrivalClock &lt;= 5</label>
+    </location>
+    <location id="v_waiting" x="400" y="0">
+      <name x="380" y="-30">Waiting</name>
+    </location>
+    <location id="v_crossing" x="600" y="0">
+      <name x="570" y="-50">Crossing</name>
+      <label kind="invariant" x="560" y="-30">crossingClock &lt;= 3</label>
+    </location>
+    <location id="v_done" x="800" y="0">
+      <name x="780" y="-30">Done</name>
+    </location>
+
+    <init ref="v_init"/>
+
+    <transition>
+      <source ref="v_init"/>
+      <target ref="v_approaching"/>
+      <label kind="assignment" x="30" y="20">arrivalClock = 0</label>
+    </transition>
+    <transition>
+      <source ref="v_approaching"/>
+      <target ref="v_waiting"/>
+      <label kind="guard" x="220" y="40">arrivalClock &gt;= 1 &amp;&amp; arrivalClock &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="v_waiting"/>
+      <target ref="v_crossing"/>
+      <label kind="guard" x="420" y="-100">green &amp;&amp; !occupied &amp;&amp; phaseClock &lt;= 17</label>
+      <label kind="assignment" x="420" y="-80">crossingClock = 0, occupied = true</label>
+    </transition>
+    <transition>
+      <source ref="v_crossing"/>
+      <target ref="v_done"/>
+      <label kind="guard" x="620" y="40">crossingClock &gt;= 2 &amp;&amp; crossingClock &lt;= 3</label>
+      <label kind="assignment" x="620" y="60">occupied = false</label>
+    </transition>
+  </template>
+
+  <system>
+TL = TrafficLight();
+Car = Vehicle();
+system TL, Car;
+  </system>
+
+  <queries>
+    <query>
+      <formula>A[] not deadlock</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (Car.Crossing imply (TL.Green &amp;&amp; green))</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; Car.Done</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (occupied imply TL.Green)</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (Car.Crossing imply occupied)</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (Car.Done imply !occupied)</formula>
+      <comment></comment>
+    </query>
+  </queries>
+</nta>

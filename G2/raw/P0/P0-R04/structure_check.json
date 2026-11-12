@@ -1,0 +1,32 @@
+{
+  "sample_classification": "SINGLE_COMPLETE_RESPONSE_WITH_EXTRA_INCOMPLETE_XML_BLOCK",
+  "uppaal": "NOT_RUN",
+  "blocks": [
+    {
+      "file": "block01_fragment.xml",
+      "sha256": "80cf28077933ce7a93b0f336d67de499b8294a12eae954aee7008cb260535aa0",
+      "xml_parse": "FAIL",
+      "error": "unclosed token: line 10, column 2"
+    },
+    {
+      "file": "block02_complete.xml",
+      "sha256": "cd99fab48c4daa361e449ebbf95b7260125f5c0dbf312c6a51879d58ca925361",
+      "xml_parse": "PASS",
+      "reference_check": "PASS",
+      "templates": 2,
+      "locations": 7,
+      "transitions": 7
+    },
+    {
+      "file": "queries.q",
+      "sha256": "8496a2361e2a1a31bec6976b831af74dd519789489136591044587d97904a6ec",
+      "query_count": 4
+    }
+  ],
+  "response_truncated": false,
+  "model_and_queries_present": true,
+  "strict_output_format": "FAIL",
+  "selected_model_block": 2,
+  "extraction": "Mechanical copy of block02_complete.xml to model.xml; no content edits",
+  "model_sha256": "cd99fab48c4daa361e449ebbf95b7260125f5c0dbf312c6a51879d58ca925361"
+}

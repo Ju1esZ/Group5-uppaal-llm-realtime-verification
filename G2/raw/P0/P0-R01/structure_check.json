@@ -1,0 +1,16 @@
+{
+  "xml_parse": "PASS",
+  "root": "nta",
+  "templates": 2,
+  "locations": 8,
+  "transitions": 8,
+  "reference_check": "PASS",
+  "query_count": 4,
+  "format_issue": "second code fence is css instead of text",
+  "uppaal": "NOT_RUN",
+  "sha256": {
+    "response.md": "5f54f3c2be869fcc6c9c32988f488f9e98794e14c1cacc859c733d934f7bb0f1",
+    "model.xml": "12f131c413709fcb8b2b39fb60baedefe1a2854e4cf20216b660030516944631",
+    "queries.q": "ebfbcd71d23c5c36ae105cfd05a54c91319d4d666814b3884adaff75cf4f04bb"
+  }
+}

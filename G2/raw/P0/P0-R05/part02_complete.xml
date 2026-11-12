@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd">
+<nta>
+  <declaration>
+    // Time unit: one second.
+    // An enabled crossing handshake cannot be delayed.
+    urgent chan go;
+  </declaration>
+
+  <template>
+    <name>TrafficLight</name>
+    <declaration>clock t;</declaration>
+
+    <location id="light_green" x="0" y="0">
+      <name x="-20" y="-30">Green</name>
+      <label kind="invariant" x="-20" y="20">t &lt;= 20</label>
+    </location>
+    <location id="light_yellow" x="250" y="0">
+      <name x="225" y="-30">Yellow</name>
+      <label kind="invariant" x="225" y="20">t &lt;= 3</label>
+    </location>
+    <location id="light_red" x="125" y="200">
+      <name x="110" y="170">Red</name>
+      <label kind="invariant" x="100" y="220">t &lt;= 20</label>
+    </location>
+
+    <init ref="light_green"/>
+
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_yellow"/>
+      <label kind="guard" x="80" y="-50">t == 20</label>
+      <label kind="assignment" x="80" y="-30">t = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_yellow"/>
+      <target ref="light_red"/>
+      <label kind="guard" x="210" y="80">t == 3</label>
+      <label kind="assignment" x="210" y="100">t = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_red"/>
+      <target ref="light_green"/>
+      <label kind="guard" x="-15" y="90">t == 20</label>
+      <label kind="assignment" x="-15" y="110">t = 0</label>
+    </transition>
+
+    <!-- Grant passage only in Green; preserve the light's clock. -->
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_green"/>
+      <label kind="synchronisation" x="-120" y="-70">go!</label>
+      <nail x="-80" y="-80"/>
+      <nail x="-80" y="40"/>
+    </transition>
+  </template>
+
+  <template>
+    <name>Vehicle</name>
+    <declaration>clock c;</declaration>
+
+    <location id="car_approaching" x="0" y="0">
+      <name x="-40" y="-30">Approaching</name>
+      <label kind="invariant" x="-25" y="20">c &lt;= 5</label>
+    </location>
+    <location id="car_waiting" x="250" y="0">
+      <name x="225" y="-30">Waiting</name>
+    </location>
+    <location id="car_crossing" x="500" y="0">
+      <name x="470" y="-30">Crossing</name>
+      <label kind="invariant" x="475" y="20">c &lt;= 3</label>
+    </location>
+    <location id="car_done" x="750" y="0">
+      <name x="735" y="-30">Done</name>
+    </location>
+
+    <init ref="car_approaching"/>
+
+    <transition>
+      <source ref="car_approaching"/>
+      <target ref="car_waiting"/>
+      <label kind="guard" x="80" y="-50">c &gt;= 1 &amp;&amp; c &lt;= 5</label>
+      <label kind="assignment" x="80" y="-30">c = 0</label>
+    </transition>
+    <transition>
+      <source ref="car_waiting"/>
+      <target ref="car_crossing"/>
+      <label kind="synchronisation" x="330" y="-50">go?</label>
+      <label kind="assignment" x="330" y="-30">c = 0</label>
+    </transition>
+    <transition>
+      <source ref="car_crossing"/>
+      <target ref="car_done"/>
+      <label kind="guard" x="580" y="-50">c &gt;= 2 &amp;&amp; c &lt;= 3</label>
+    </transition>
+  </template>
+
+  <system>
+    Light = TrafficLight();
+    Car = Vehicle();
+    system Light, Car;
+  </system>
+
+  <queries>
+    <query>
+      <formula>A[] not deadlock</formula>
+      <comment>No reachable deadlock.</comment>
+    </query>
+    <query>
+      <formula>A[] (Car.Crossing imply Light.Green)</formula>
+      <comment>The entire crossing takes place during green.</comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; Car.Done</formula>
+      <comment>Completion is reachable.</comment>
+    </query>
+    <query>
+      <formula>A&lt;&gt; Car.Done</formula>
+      <comment>The vehicle eventually completes on every execution.</comment>
+    </query>
+  </queries>
+</nta>

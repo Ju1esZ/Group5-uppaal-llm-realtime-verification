@@ -1,0 +1,32 @@
+{
+  "uppaal": "NOT_RUN",
+  "response_boundary": "User confirmed single complete response, no continuation or regeneration",
+  "original_format": "No Markdown fences in supplied attachment; original UI fence labels unknown",
+  "source_sha256": "f62b9c46ec4cf34a6b873733a2e75ec8b65f8c971b0191590c811f034df93e8e",
+  "parts": [
+    {
+      "file": "part01_fragment.xml",
+      "sha256": "36d990e4a7e24c8dbbf8b3aa1b966d8cfb56fe0b12e65f1b7f6f7d58f2e4e595",
+      "xml_parse": "FAIL",
+      "error": "not well-formed (invalid token): line 81, column 67"
+    },
+    {
+      "file": "part02_complete.xml",
+      "sha256": "1853a84376a8cc8ee1ad37b993f7bac820599830da2db57d19915cd517ae79c2",
+      "xml_parse": "PASS",
+      "reference_check": "PASS",
+      "templates": 2,
+      "locations": 7,
+      "transitions": 7
+    },
+    {
+      "file": "queries.q",
+      "sha256": "7f9ceb7a1c848bb70d66fa6b0abce7ad11fc7e49af875534082f49a6a8d4c993",
+      "query_count": 4,
+      "embedded_queries_match": true
+    }
+  ],
+  "response_truncated": false,
+  "selected_model_part": 2,
+  "model_and_queries_present": true
+}

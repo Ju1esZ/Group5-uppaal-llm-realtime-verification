@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd">
+<nta>
+  <declaration>
+clock phaseClock;
+bool green = true;
+bool crossing = false;
+  </declaration>
+
+  <template>
+    <name>TrafficLight</name>
+    <declaration></declaration>
+
+    <location id="light_green" x="0" y="0">
+      <name x="-20" y="-30">Green</name>
+      <label kind="invariant" x="-40" y="20">phaseClock &lt;= 20</label>
+    </location>
+    <location id="light_yellow" x="280" y="0">
+      <name x="260" y="-30">Yellow</name>
+      <label kind="invariant" x="240" y="20">phaseClock &lt;= 3</label>
+    </location>
+    <location id="light_red" x="140" y="220">
+      <name x="120" y="240">Red</name>
+      <label kind="invariant" x="100" y="270">phaseClock &lt;= 20</label>
+    </location>
+
+    <init ref="light_green"/>
+
+    <transition>
+      <source ref="light_green"/>
+      <target ref="light_yellow"/>
+      <label kind="guard" x="40" y="-80">phaseClock &gt;= 20 &amp;&amp; !crossing</label>
+      <label kind="assignment" x="50" y="-55">phaseClock = 0, green = false</label>
+    </transition>
+    <transition>
+      <source ref="light_yellow"/>
+      <target ref="light_red"/>
+      <label kind="guard" x="220" y="90">phaseClock &gt;= 3</label>
+      <label kind="assignment" x="220" y="115">phaseClock = 0</label>
+    </transition>
+    <transition>
+      <source ref="light_red"/>
+      <target ref="light_green"/>
+      <label kind="guard" x="-100" y="90">phaseClock &gt;= 20</label>
+      <label kind="assignment" x="-140" y="115">phaseClock = 0, green = true</label>
+    </transition>
+  </template>
+
+  <template>
+    <name>Vehicle</name>
+    <declaration>
+clock v;
+    </declaration>
+
+    <location id="vehicle_approaching" x="0" y="0">
+      <name x="-40" y="-30">Approaching</name>
+      <label kind="invariant" x="-25" y="20">v &lt;= 5</label>
+    </location>
+    <location id="vehicle_waiting" x="250" y="0">
+      <name x="225" y="-30">Waiting</name>
+    </location>
+    <location id="vehicle_crossing" x="500" y="0">
+      <name x="475" y="-30">Crossing</name>
+      <label kind="invariant" x="475" y="20">v &lt;= 3</label>
+    </location>
+    <location id="vehicle_done" x="750" y="0">
+      <name x="730" y="-30">Done</name>
+    </location>
+
+    <init ref="vehicle_approaching"/>
+
+    <transition>
+      <source ref="vehicle_approaching"/>
+      <target ref="vehicle_waiting"/>
+      <label kind="guard" x="80" y="-60">v &gt;= 1</label>
+      <label kind="assignment" x="80" y="-40">v = 0</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_waiting"/>
+      <target ref="vehicle_crossing"/>
+      <label kind="guard" x="280" y="-80">green &amp;&amp; phaseClock &lt;= 17</label>
+      <label kind="assignment" x="290" y="-55">v = 0, crossing = true</label>
+    </transition>
+    <transition>
+      <source ref="vehicle_crossing"/>
+      <target ref="vehicle_done"/>
+      <label kind="guard" x="570" y="-60">v &gt;= 2</label>
+      <label kind="assignment" x="570" y="-40">crossing = false</label>
+    </transition>
+  </template>
+
+  <system>
+Light = TrafficLight();
+Car = Vehicle();
+system Light, Car;
+  </system>
+
+  <queries>
+    <query>
+      <formula>A[] not deadlock</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (Car.Crossing imply Light.Green)</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; Car.Done</formula>
+      <comment></comment>
+    </query>
+  </queries>
+</nta>
+A[] not deadlock
+A[] (Car.Crossing imply Light.Green)
+E<> Car.Done

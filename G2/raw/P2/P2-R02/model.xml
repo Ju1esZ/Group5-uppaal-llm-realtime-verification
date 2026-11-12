@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nta>
+  <declaration>
+clock phase;
+bool green = true;
+bool occupied = false;
+  </declaration>
+
+  <template>
+    <name>TrafficLight</name>
+    <declaration></declaration>
+
+    <location id="tl_green" x="0" y="0">
+      <name x="-20" y="-30">Green</name>
+      <label kind="invariant" x="-30" y="20">phase &lt;= 20</label>
+    </location>
+
+    <location id="tl_yellow" x="250" y="0">
+      <name x="230" y="-30">Yellow</name>
+      <label kind="invariant" x="220" y="20">phase &lt;= 3</label>
+    </location>
+
+    <location id="tl_red" x="125" y="200">
+      <name x="110" y="170">Red</name>
+      <label kind="invariant" x="95" y="220">phase &lt;= 20</label>
+    </location>
+
+    <init ref="tl_green"/>
+
+    <transition>
+      <source ref="tl_green"/>
+      <target ref="tl_yellow"/>
+      <label kind="guard" x="30" y="-80">phase == 20 &amp;&amp; !occupied</label>
+      <label kind="assignment" x="40" y="-55">phase = 0, green = false</label>
+    </transition>
+
+    <transition>
+      <source ref="tl_yellow"/>
+      <target ref="tl_red"/>
+      <label kind="guard" x="210" y="80">phase == 3</label>
+      <label kind="assignment" x="210" y="105">phase = 0</label>
+    </transition>
+
+    <transition>
+      <source ref="tl_red"/>
+      <target ref="tl_green"/>
+      <label kind="guard" x="-100" y="80">phase == 20</label>
+      <label kind="assignment" x="-160" y="105">phase = 0, green = true</label>
+    </transition>
+  </template>
+
+  <template>
+    <name>Vehicle</name>
+    <declaration>
+clock v;
+    </declaration>
+
+    <location id="v_approach" x="0" y="0">
+      <name x="-30" y="-30">Approach</name>
+      <label kind="invariant" x="-25" y="20">v &lt;= 5</label>
+    </location>
+
+    <location id="v_waiting" x="250" y="0">
+      <name x="225" y="-30">Waiting</name>
+    </location>
+
+    <location id="v_crossing" x="500" y="0">
+      <name x="470" y="-30">Crossing</name>
+      <label kind="invariant" x="475" y="20">v &lt;= 3</label>
+    </location>
+
+    <location id="v_done" x="750" y="0">
+      <name x="735" y="-30">Done</name>
+    </location>
+
+    <init ref="v_approach"/>
+
+    <transition>
+      <source ref="v_approach"/>
+      <target ref="v_waiting"/>
+      <label kind="guard" x="60" y="-75">v &gt;= 1 &amp;&amp; v &lt;= 5</label>
+      <label kind="assignment" x="85" y="-50">v = 0</label>
+    </transition>
+
+    <transition>
+      <source ref="v_waiting"/>
+      <target ref="v_crossing"/>
+      <label kind="guard" x="260" y="-100">green &amp;&amp; !occupied &amp;&amp; phase &lt;= 17</label>
+      <label kind="assignment" x="290" y="-50">v = 0, occupied = true</label>
+    </transition>
+
+    <transition>
+      <source ref="v_crossing"/>
+      <target ref="v_done"/>
+      <label kind="guard" x="550" y="-75">v &gt;= 2 &amp;&amp; v &lt;= 3</label>
+      <label kind="assignment" x="560" y="-50">occupied = false</label>
+    </transition>
+  </template>
+
+  <system>
+TL = TrafficLight();
+V = Vehicle();
+system TL, V;
+  </system>
+
+  <queries>
+    <query>
+      <formula>A[] not deadlock</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (V.Crossing imply (TL.Green &amp;&amp; green))</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; V.Done</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (V.Crossing imply occupied)</formula>
+      <comment></comment>
+    </query>
+    <query>
+      <formula>A[] (V.Done imply !occupied)</formula>
+      <comment></comment>
+    </query>
+  </queries>
+</nta>
