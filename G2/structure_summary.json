@@ -1,0 +1,107 @@
+[
+  {
+    "sample": "P0-R01",
+    "sha256": "12f131c413709fcb8b2b39fb60baedefe1a2854e4cf20216b660030516944631",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P0-R02",
+    "sha256": "255c9167a81552e0d9df6a0e05eb03fe0740e9a1b9ff832afc31611f204668cb",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P0-R03",
+    "sha256": "ce75f1e9b9c7b7a86ba82fa857d0fbd3500768c9edffc15d580c88eb1edd13cf",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P0-R04",
+    "sha256": "cd99fab48c4daa361e449ebbf95b7260125f5c0dbf312c6a51879d58ca925361",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P0-R05",
+    "sha256": "1853a84376a8cc8ee1ad37b993f7bac820599830da2db57d19915cd517ae79c2",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P1-R01",
+    "sha256": "a717177311c81a354e522e7436e23f0e93630c928237149b935a3eae024f9fcb",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P1-R02",
+    "sha256": "9afcf2c63a8aa28987a407b698bcbf3e9bb57d8b147d17ee2f03cac285d5bb27",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P1-R03",
+    "sha256": "b9fe896db7e408470aeed441e6401846e27e4ccbe07d301c469f1019177febeb",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P1-R04",
+    "sha256": "1275ba67de9331e45c98ebbedc99750d936d787eae12e621073b0eab5399fe65",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P1-R05",
+    "sha256": "2f7da54dc22126e469d4435d7337e4ebc308d6244205761d3069c736e47bb618",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P2-R01",
+    "sha256": "54b3eb231860664b635774396f872134e34630d7f17c2803fe9434253049e9d4",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P2-R02",
+    "sha256": "d81dc4accf66856c91c1535db76a53a4d0342c6e7e44bdead2aa0b17250069e0",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P2-R03",
+    "sha256": "8dba5bacc2fd72cb34b7475b6e4fea826ca6275ce7cdd17712f94c53b5509a2a",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P2-R04",
+    "sha256": "2c88db1b8ccbafc90bd38a2abb75e091eb84b111a6dccce27d889d2468c8c8fc",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  },
+  {
+    "sample": "P2-R05",
+    "sha256": "0298d34c35db0f6c31b8ce57e59b2b6c4c069f3952877fc4a2aabe24c45c9ed7",
+    "uppaal": "NOT_RUN",
+    "xml_parse": "PASS",
+    "structure_issues": []
+  }
+]

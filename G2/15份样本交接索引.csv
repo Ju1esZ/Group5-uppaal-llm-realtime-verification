@@ -1,0 +1,16 @@
+﻿编号,模型路径,灯实例,车实例,适配绿灯谓词,所提取模型XML解析
+P0-R01,raw\P0\P0-R01\model.xml,Light,Car,(Light.Green or Light.GreenClearance),PASS
+P0-R02,raw\P0\P0-R02\model.xml,Light,Car,Light.Green,PASS
+P0-R03,raw\P0\P0-R03\model.xml,Light,Car,Light.Green,PASS
+P0-R04,raw\P0\P0-R04\model.xml,Light,Car,Light.Green,PASS
+P0-R05,raw\P0\P0-R05\model.xml,Light,Car,Light.Green,PASS
+P1-R01,raw\P1\P1-R01\model.xml,Light,Car,Light.Green,PASS
+P1-R02,raw\P1\P1-R02\model.xml,Light,Car,Light.Green,PASS
+P1-R03,raw\P1\P1-R03\model.xml,Light,Car,Light.Green,PASS
+P1-R04,raw\P1\P1-R04\model.xml,TL,V,TL.Green,PASS
+P1-R05,raw\P1\P1-R05\model.xml,TL,V,TL.Green,PASS
+P2-R01,raw\P2\P2-R01\model.xml,Light,Car,Light.Green,PASS
+P2-R02,raw\P2\P2-R02\model.xml,TL,V,TL.Green,PASS
+P2-R03,raw\P2\P2-R03\model.xml,TL,Car,TL.Green,PASS
+P2-R04,raw\P2\P2-R04\model.xml,L,V,L.Green,PASS
+P2-R05,raw\P2\P2-R05\model.xml,TL,Car,TL.Green,PASS
